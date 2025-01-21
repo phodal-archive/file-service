@@ -1,0 +1,55 @@
+@startuml
+participant IndexingJob
+participant RepoClientMultiplexer
+participant RepoClient
+participant MerkleClient
+participant Server
+
+IndexingJob -> RepoClientMultiplexer: 创建RepoClient()
+RepoClientMultiplexer -> RepoClient: new RepoClient()
+note right: 日志: Creating Indexing Repo client
+
+IndexingJob -> MerkleClient: 初始化MerkleClient()
+note right: 日志: Creating merkle client
+
+IndexingJob -> RepoClientMultiplexer: handshakeWithRetry()
+RepoClientMultiplexer -> RepoClient: fastRepoInitHandshake()
+RepoClient -> Server: POST /handshake (携带根哈希)
+Server --> RepoClient: 返回STATUS_OUT_OF_SYNC
+RepoClient --> RepoClientMultiplexer: 握手结果
+RepoClientMultiplexer --> IndexingJob: 返回OUT_OF_SYNC状态
+note right: 日志: Handshake result: STATUS_OUT_OF_SYNC
+
+IndexingJob -> MerkleClient: getSubtreeHash(".")
+MerkleClient --> IndexingJob: 返回根哈希
+note right: 日志: Root hash: 4727d4cc...
+
+IndexingJob -> IndexingJob: startSync()
+loop 同步子树
+    IndexingJob -> MerkleClient: getSubtreeHash(路径)
+    MerkleClient --> IndexingJob: 返回子树哈希
+    IndexingJob -> RepoClientMultiplexer: syncMerkleSubtreeWithRetry()
+    RepoClientMultiplexer -> RepoClient: syncMerkleSubtree()
+    RepoClient -> Server: 同步子树请求
+    Server --> RepoClient: 返回差异文件列表
+    RepoClient --> IndexingJob: 同步结果
+end
+
+IndexingJob -> IndexingJob: 准备上传文件队列
+loop 并发上传文件
+    IndexingJob -> RepoClientMultiplexer: fastUpdateFile()
+    RepoClientMultiplexer -> RepoClient: fastUpdateFile()
+    RepoClient -> Server: 上传文件内容
+    Server --> RepoClient: 确认上传成功
+    RepoClient --> IndexingJob: 更新进度
+    note right: 日志: Completed job successfully
+end
+
+IndexingJob -> RepoClientMultiplexer: ensureIndexCreatedWithRetry()
+RepoClientMultiplexer -> RepoClient: ensureIndexCreated()
+RepoClient -> Server: 创建索引请求
+Server --> RepoClient: 索引创建完成
+RepoClient --> IndexingJob: 返回成功
+note right: 日志: Finished indexing repository
+
+@enduml

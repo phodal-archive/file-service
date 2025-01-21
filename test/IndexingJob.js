@@ -239,13 +239,6 @@ class RepoClientMultiplexer {
 	}
 }
 
-class IndexingRetrievalLogger {
-	static debug (e) {console.log(e)}
-	static info (e) {console.log(e)}
-	static warn (e) {console.log(e)}
-	static error (e) {console.log(e)}
-}
-
 class IndexingJob {
 	constructor (repoInfo, repoClient, currentIndexingJobs, status, indexingIntent, context, config) {
 		this.repoInfo = repoInfo, this.repoClient = repoClient
