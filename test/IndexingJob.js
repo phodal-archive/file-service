@@ -1,30 +1,3 @@
-const fs = require('fs').promises
-const u = {}
-u.getRelativePath = function (e) {
-    const t = vscode.workspace.workspaceFolders
-    if (!t) return '.' + a.sep + e
-    if (e === t[0].uri.fsPath) return '.'
-    let r = '.' + a.sep + vscode.workspace.asRelativePath(e, !1).replaceAll('/', a.sep)
-    return r.endsWith(a.sep) && (r = r.slice(0, -1)), r
-}
-
-const DELIMITER_PATTERN = /[^a-zA-Z0-9]/ // Assuming 'd' is a regex pattern
-const ENCRYPTION_FUNCTION = (segment, key) => { /* encryption logic */
-} // Assuming 'c' is an encryption function
-function encryptPath(path, key) {
-    if (key === undefined) {
-        return path
-    }
-
-    return path
-        .split(DELIMITER_PATTERN)
-        .map(segment => DELIMITER_PATTERN.test(segment) || segment === '' ? segment : ENCRYPTION_FUNCTION(segment, key))
-        .join('')
-}
-
-const y = {}
-y.encryptPath = encryptPath
-
 class HighLevelDescriptionJob {
     constructor(e, t, r) {
         this.repoClient = e, this.merkleClient = t, this.context = r, this.abortController = new AbortController
@@ -869,5 +842,176 @@ class IndexingJob {
                 errorIsRateLimitError: !1
             })
         }
+    }
+}
+
+class FastIndexer {
+    constructor(e) {
+        this.context = e, this.disposables = [], this.status = new m.LocalIndexingStatus, this.currentIndexingJobs = new m.CurrentIndexingJobs, this.highLevelDescriptionGetter = new f.HighLevelDescriptionGetter(e), this.getInitialValues = (async () => {
+            try {
+                for (; void 0 === this.backendUrl;) this.accessToken = a.cursor.getCursorAuthToken(), this.backendUrl = a.cursor.getCursorCreds()?.repoBackendUrl, await this.createRepositoryClient(), await new Promise((e => setTimeout(e, 250)))
+            } catch (e) {
+                l.IndexingRetrievalLogger.error('failed to create the client', e)
+            }
+        })()
+        const t = {
+            getCurrentJobs: async () => this.currentIndexingJobs.get().slice(-15).map((e => ({fileName: e.relativePath}))),
+            decryptPaths: async e => {
+                if (void 0 === this.repoIndexWatcher) throw new Error('Repo index watcher is undefined. We cannot decrypt the paths.')
+                const t = this.repoIndexWatcher.repoInfo.pathEncryptionKey
+                return void 0 === t ? e : e.map((e => (0, C.decryptPath)(e, t)))
+            },
+            compileGlobFilter: async e => {
+                if (void 0 === this.repoIndexWatcher) throw new Error('Repo index watcher is undefined. We cannot compile the glob filter.')
+                const t = this.repoIndexWatcher.repoInfo.pathEncryptionKey
+                return void 0 === t ? e : {
+                    globFilter: e.globFilter ? (0, C.encryptGlob)(e.globFilter, t) : void 0,
+                    notGlobFilter: e.notGlobFilter ? (0, C.encryptGlob)(e.notGlobFilter, t) : void 0
+                }
+            },
+            getRepoInfo: async () => {
+                if (void 0 !== this.repoIndexWatcher) return this.repoIndexWatcher.repoInfo.export()
+                const e = this.getWorkspaceRootInfoWithProperError()
+                return void 0 === e.error && void 0 !== e.info ? e.info.export() : void 0
+            },
+            getStatus: async () => this.status.get(),
+            getIndexingProgress: async () => await this.currentIndexingJobs.getCurrentProgress(),
+            getHighLevelFolderDescription: async () => this.highLevelDescriptionGetter.getHighLevelFolderDescription()
+        }
+        let r = a.cursor.registerIndexProvider(t)
+        this.disposables.push(r), this.status.init(), this.disposables.push(a.cursor.onDidChangeCursorAuthToken((e => {
+            this.accessToken = e, this.createRepositoryClient().catch(l.IndexingRetrievalLogger.error).then((() => {
+                this.createRepoIndexWatcherIfShouldIndex({shouldRecreateIfExists: !0})
+            }))
+        }))), this.disposables.push(a.cursor.onDidChangeCursorCreds((e => {
+            this.backendUrl = e.repoBackendUrl, this.createRepositoryClient().catch(l.IndexingRetrievalLogger.error).then((() => {
+                this.createRepoIndexWatcherIfShouldIndex({shouldRecreateIfExists: !0})
+            }))
+        }))), this.disposables.push(a.cursor.onDidRequestRepoIndex((async () => {
+            await this.getInitialValues
+            const e = this.getWorkspaceRootInfoWithProperError()
+            if (void 0 !== e.error || void 0 === e.info) return e.error === I.UserNotLoggedInError ? this.status.set({
+                case: 'error',
+                error: 'You aren\'t logged in. We only support indexing for registered users.'
+            }) : e.error === I.NoWorkspaceUriError ? this.status.set({
+                case: 'error',
+                error: 'We do not support single files yet.'
+            }) : e.error === I.WorkspaceUriUndefinedError ? this.status.set({
+                case: 'error',
+                error: 'You don\'t have a proper workspace open. We only support indexing for vscode workspaces.'
+            }) : this.status.set({
+                case: 'error',
+                error: 'We had a trouble setting up the indexing. Please report this to hi@cursor.so'
+            }), void l.IndexingRetrievalLogger.error(e.error ?? 'Unknown error')
+            const t = e.info
+            l.IndexingRetrievalLogger.info('Setting indexing intent to should-index'), this.setIndexingIntent(t, A.IndexingIntent.ShouldIndex), await this.createRepoIndexWatcherIfShouldIndex({shouldRecreateIfExists: !1})
+        }))), this.disposables.push(a.cursor.onDidRequestRepoInterrupt((e => {
+            if (this.repoIndexWatcher?.dispose(), this.repoIndexWatcher = void 0, e) this.status.set({case: 'paused'}), a.cursor.onDidChangeIndexingStatus() else {
+                const e = this.getWorkspaceRootInfo()
+                e.ok() && this.setIndexingIntent(e.v, A.IndexingIntent.ShouldNotIndex), this.currentIndexingJobs.set([]), a.cursor.updateUploadProgress(0, a.UploadType.Syncing, !1), this.status.set({case: 'not-indexed'}), a.cursor.onDidChangeIndexingStatus()
+            }
+        }))), this.createRepoIndexWatcherIfShouldIndex({shouldRecreateIfExists: !1})
+    }
+
+    async createRepoIndexWatcherIfShouldIndex(e) {
+        try {
+            if (void 0 !== this.repoIndexWatcher) {
+                if (!e.shouldRecreateIfExists) return
+                this.repoIndexWatcher.dispose(), this.repoIndexWatcher = void 0
+            }
+            if (await this.getInitialValues, void 0 === this.accessToken) return void l.IndexingRetrievalLogger.error('accessToken is undefined. User is not logged in. We shouldn\'t do any indexing.')
+            const t = this.getWorkspaceRootInfo()
+            if (!t.ok()) return void l.IndexingRetrievalLogger.error(t.error())
+            const r = t.v, n = a.cursor.shouldIndexNewRepos(), s = this.getIndexingIntent(r)
+            if (!(s === A.IndexingIntent.FallBackToDefault ? n : s === A.IndexingIntent.ShouldIndex)) return l.IndexingRetrievalLogger.info('Not indexing because user does not want to index this workspace.'), void this.status.set({case: 'not-indexed'})
+            if (void 0 === this.repoClient) return void l.IndexingRetrievalLogger.error('Repo client is undefined. We shouldn\'t be indexing! This is a serious bug.')
+            if (void 0 !== this.repoIndexWatcher) return
+            this.repoIndexWatcher = new c.RepoIndexWatcher(r, this.repoClient, this.currentIndexingJobs, this.status, s, this.context)
+        } finally {
+            a.cursor.onDidChangeIndexingStatus()
+        }
+    }
+
+    getAuthId() {
+        const e = this.accessToken
+        if (void 0 !== e) return (0, p.decodeJwt)(e).sub
+    }
+
+    dispose() {
+        for (const e of this.disposables) e.dispose()
+        this.repoIndexWatcher?.dispose(), this.highLevelDescriptionGetter.dispose(), this.repoClient?.dispose()
+    }
+
+    async createRepositoryClient() {
+        void 0 !== this.repoClient && this.repoClient.dispose(), void 0 !== this.accessToken && void 0 !== this.backendUrl ? this.repoClient = new g.RepoClientMultiplexer(this.accessToken, this.backendUrl) : this.repoClient = void 0
+    }
+
+    getWorkspaceRootInfoWithProperError() {
+        const e = a.workspace.workspaceFolders
+        if (void 0 === e || 0 === e.length) return {info: void 0, error: I.NoWorkspaceUriError}
+        const t = e[0].uri
+        if (void 0 === t) return {info: void 0, error: I.WorkspaceUriUndefinedError}
+        const r = this.getAuthId()
+        if (void 0 === r || void 0 === this.accessToken || void 0 === this.backendUrl) return {
+            info: void 0,
+            error: I.UserNotLoggedInError
+        }
+        const n = this.getLegacyRepoName(t), s = this.getRepoKeysKey(n)
+        let o = this.context.workspaceState.get(s, void 0)
+        void 0 === o && (o = this.getInitialRepoKeys(), this.context.workspaceState.update(s, o))
+        const i = new E.InternalRepoInfo({
+            repoName: o.repoName,
+            legacyRepoName: n,
+            repoOwner: r,
+            relativeWorkspacePath: '.',
+            workspaceUri: t,
+            orthogonalTransformSeed: o.orthogonalTransformationSeed,
+            pathEncryptionKey: o.pathEncryptionKey
+        })
+        return l.IndexingRetrievalLogger.setUser(r), l.IndexingRetrievalLogger.setRepo(o.repoName), {
+            info: i,
+            error: void 0
+        }
+    }
+
+    getWorkspaceRootInfo() {
+        const {info: e, error: t} = this.getWorkspaceRootInfoWithProperError()
+        return void 0 !== t || void 0 === e ? (0, d.Err)(t ?? 'Unknown error') : (0, d.Ok)(e)
+    }
+
+    getInitialRepoKeys() {
+        return {
+            repoName: (0, h.generateUuid)(),
+            orthogonalTransformationSeed: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
+            pathEncryptionKey: (0, C.generatePathEncryptionKey)()
+        }
+    }
+
+    getLegacyRepoName(e) {
+        const t = i.basename(e.fsPath)
+        return (0, u.getHash)(e.fsPath) + '-' + t
+    }
+
+    setIndexingIntent(e, t) {
+        const r = this.getIndexingIntentKey(e)
+        this.context.workspaceState.update(r, t)
+    }
+
+    getIndexingIntent(e) {
+        const t = this.getIndexingIntentKey(e),
+            r = this.context.workspaceState.get(t, A.IndexingIntent.FallBackToDefault)
+        try {
+            return void 0 !== A.IndexingIntent[r] ? A.IndexingIntent.FallBackToDefault : r
+        } catch (e) {
+            return A.IndexingIntent.FallBackToDefault
+        }
+    }
+
+    getIndexingIntentKey(e) {
+        return `map/${e.legacyRepoName}/${e.repoOwner}/indexingIntent`
+    }
+
+    getRepoKeysKey(e) {
+        return `map/${e}/repoKeys`
     }
 }
