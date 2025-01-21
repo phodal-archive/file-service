@@ -1,3 +1,31 @@
+vscode.activate = function (e) {
+	console.log('activating cursor retrieval extension', 'isDev:', e.isDevelopment), l.IndexingRetrievalLogger.init(), l.CursorGitGraphLogger.init(), e.isDevelopment && l.CursorDebugLogger.init(), (0, d.runWorkspaceStateMigrations)(e)
+	const indexer = new FastIndexer(e)
+	C.push((async () => indexer.dispose()))
+	const r = new u.GitProvider
+	r.registerProviders(), C.push((async () => r.dispose())), (0, c.registerAction)(m.GitActions.GetRecentCommitHashesTouchingFile, (async e => {try {return await r.getLastCommitsTouchingFile(e.numCommits, e.relativePath)} catch (e) {throw l.CursorDebugLogger.error(e), e}})), (0, c.registerAction)(m.GitActions.GetCommitByHash, (async e => {try {return await r.getFullCommitFromHash(e.hash)} catch (e) {throw l.CursorDebugLogger.error(e), e}})), (0, c.registerAction)(m.GitActions.GetCommitDetailsByHashes, (async e => {try {return await Promise.all(e.hashes.map((e => r.getCommitDetails(e))))} catch (e) {throw l.CursorDebugLogger.error(e), e}}))
+	const n = new A.EverythingProviderCreator(e)
+	C.push((async () => n.dispose()))
+	const s = p.languages.registerCodeActionsProvider({ language: '*' }, new I)
+	C.push((async () => s.dispose()))
+	const o = new h.GitGraph(e, {
+		shouldIndex: () => {
+			const e = p.workspace.getConfiguration().get(m.GIT_GRAPH_INDEXING_CONFIG_ID, 'default')
+			if ('enabled' === e) return !0
+			if ('disabled' === e) return !1
+			if (p.cursor.shouldIndexNewRepos()) return !0
+			const r = indexer.getWorkspaceRootInfo()
+			if (!r.ok()) return !1
+			const n = r.v
+			return indexer.getIndexingIntent(n) === E.IndexingIntent.ShouldIndex
+		}
+	})
+	if (C.push((async () => o.dispose())), (0, c.registerAction)(m.ContextGraphActions.GetWorkspaceSyncStatus, (async e => await o.getWorkspaceSyncStatus())), (0, c.registerAction)(m.ContextGraphActions.GetRelatedFiles, (async e => o.getRelatedFiles(e.absolutePath, e.maxNumFiles))), e.isDevelopment) {
+		const t = new g.DevOnlyRedisCache;
+		(0, f.registerRedisActions)(t, e)
+	}
+}
+
 class HighLevelDescriptionJob {
     constructor(e, t, r) {
         this.repoClient = e, this.merkleClient = t, this.context = r, this.abortController = new AbortController
@@ -921,12 +949,12 @@ class FastIndexer {
             }
             if (await this.getInitialValues, void 0 === this.accessToken) return void l.IndexingRetrievalLogger.error('accessToken is undefined. User is not logged in. We shouldn\'t do any indexing.')
             const t = this.getWorkspaceRootInfo()
-            if (!t.ok()) return void l.IndexingRetrievalLogger.error(t.error())
+            if (!t.ok()) return void IndexingRetrievalLogger.error(t.error())
             const r = t.v, n = a.cursor.shouldIndexNewRepos(), s = this.getIndexingIntent(r)
-            if (!(s === A.IndexingIntent.FallBackToDefault ? n : s === A.IndexingIntent.ShouldIndex)) return l.IndexingRetrievalLogger.info('Not indexing because user does not want to index this workspace.'), void this.status.set({case: 'not-indexed'})
-            if (void 0 === this.repoClient) return void l.IndexingRetrievalLogger.error('Repo client is undefined. We shouldn\'t be indexing! This is a serious bug.')
+            if (!(s === A.IndexingIntent.FallBackToDefault ? n : s === IndexingIntent.ShouldIndex)) return l.IndexingRetrievalLogger.info('Not indexing because user does not want to index this workspace.'), void this.status.set({case: 'not-indexed'})
+            if (void 0 === this.repoClient) return void IndexingRetrievalLogger.error('Repo client is undefined. We shouldn\'t be indexing! This is a serious bug.')
             if (void 0 !== this.repoIndexWatcher) return
-            this.repoIndexWatcher = new c.RepoIndexWatcher(r, this.repoClient, this.currentIndexingJobs, this.status, s, this.context)
+            this.repoIndexWatcher = new RepoIndexWatcher(r, this.repoClient, this.currentIndexingJobs, this.status, s, this.context)
         } finally {
             a.cursor.onDidChangeIndexingStatus()
         }
