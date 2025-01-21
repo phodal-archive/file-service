@@ -42,6 +42,15 @@ console.log(module.DiffClient.prototype.constructor.toString())
 console.log(module.GitClient.prototype.constructor.toString())
 console.log(module.MerkleClient.prototype.constructor.toString())
 
-let diffClient = module.DiffClient();
-diffClient
+let diffClient = new module.DiffClient();
+console.log(diffClient)
+let diff = diffClient.diff("a\nb", "b\nb");
+console.log(diff)
+let lines = diffClient.diffLines("a\nb", "b\nb");
+console.log(lines)
 
+let merkleClient = new module.MerkleClient(".");
+merkleClient.init()
+merkleClient.getAllFiles().then(files => {
+    console.log(files)
+})
