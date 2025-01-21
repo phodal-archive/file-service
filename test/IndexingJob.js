@@ -1,3 +1,36 @@
+const fs = require('fs').promises
+const u = {}
+u.getRelativePath = function (e) {
+	const t = vscode.workspace.workspaceFolders
+	if (!t) return '.' + a.sep + e
+	if (e === t[0].uri.fsPath) return '.'
+	let r = '.' + a.sep + vscode.workspace.asRelativePath(e, !1).replaceAll('/', a.sep)
+	return r.endsWith(a.sep) && (r = r.slice(0, -1)), r
+}
+
+const DELIMITER_PATTERN = /[^a-zA-Z0-9]/ // Assuming 'd' is a regex pattern
+const ENCRYPTION_FUNCTION = (segment, key) => { /* encryption logic */ } // Assuming 'c' is an encryption function
+function encryptPath (path, key) {
+	if (key === undefined) {
+		return path
+	}
+
+	return path
+		.split(DELIMITER_PATTERN)
+		.map(segment => DELIMITER_PATTERN.test(segment) || segment === '' ? segment : ENCRYPTION_FUNCTION(segment, key))
+		.join('')
+}
+
+const y = {}
+y.encryptPath = encryptPath
+
+class IndexingRetrievalLogger {
+	static debug (e) {console.log(e)}
+	static info (e) {console.log(e)}
+	static warn (e) {console.log(e)}
+	static error (e) {console.log(e)}
+}
+
 class IndexingJob {
 	constructor (repoInfo, repoClient, currentIndexingJobs, status, indexingIntent, context, config) {
 		this.repoInfo = repoInfo, this.repoClient = repoClient
@@ -6,9 +39,9 @@ class IndexingJob {
 		this.context = context, this.config = config
 		this.MAX_NUM_ITERATIONS = 1e7
 		this.syncFileListToServerCalled = !1, this.abortController = new AbortController
-		l.IndexingRetrievalLogger.info('Creating merkle client.')
+		IndexingRetrievalLogger.info('Creating merkle client.')
 		this.merkleClient = new c.MerkleClient(this.repoInfo.workspaceUri.fsPath)
-		l.IndexingRetrievalLogger.info('Done creating merkle client.')
+		IndexingRetrievalLogger.info('Done creating merkle client.')
 		this.highLevelDescriptionJob = new I.HighLevelDescriptionJob(this.repoClient, this.merkleClient, this.context)
 		this.result = this.startIndexingRepository()
 		this.result.finally((() => {this.dispose()}))
@@ -20,41 +53,45 @@ class IndexingJob {
 		let t = [], r = e, n = 100
 		for (; n > 0;) {
 			n -= 1
-			const e = i.dirname(r)
-			if ('.' === (0, u.getRelativePath)(e)) {
-				t.push(e)
+			const dirname = i.dirname(r)
+			if ('.' === (0, u.getRelativePath)(dirname)) {
+				t.push(dirname)
 				break
 			}
-			t.push(e), r = e
+			t.push(dirname), r = dirname
 		}
 		return t
 	}
 
 	async updateNumberOfUploadJobs (e, t, r) {
-		const merkleClient = this.merkleClient, s = (await Promise.allSettled(t.map((async e => {
+		const merkleClient = this.merkleClient
+		const numbers = (await Promise.allSettled(t.map((async e => {
 			const t = i.join(r, e)
 			return merkleClient.getAllDirFilesToEmbed(t).then((e => e.length))
 		})))).reduce(((e, t) => 'fulfilled' === t.status ? e + t.value : e), e.length)
-		return l.IndexingRetrievalLogger.info('setting numJobsToGo to ' + s), this.currentIndexingJobs.setNumJobsToGo(s), s
+		IndexingRetrievalLogger.info('setting numJobsToGo to ' + numbers)
+		this.currentIndexingJobs.setNumJobsToGo(numbers)
+		return numbers
 	}
 
 	async startSync (e) {
 		if ('onlyCallThisFromStartFastRemoteSync' !== e) return (0, d.Err)('You must call this from startFastRemoteSync')
-		const t = [], treeHash = await this.merkleClient.getSubtreeHash('.')
-		t.push({ relativePath: '.', hash: treeHash })
+		const entriesToProcess = [], treeHash = await this.merkleClient.getSubtreeHash('.')
+		entriesToProcess.push({ relativePath: '.', hash: treeHash })
 		const n = new Set, s = new Set, o = new Set, a = new Set, c = new p.Semaphore(this.config.syncConcurrency)
 		let g = 0
 		const f = []
-		for (; (c.getCount() > 0 || t.length > 0) && g < this.MAX_NUM_ITERATIONS;) {
+		for (; (c.getCount() > 0 || entriesToProcess.length > 0) && g < this.MAX_NUM_ITERATIONS;) {
 			if (g += 1, this.abortController.signal.aborted) return (0, d.Err)('Aborted')
-			if (0 === t.length) {
-				l.IndexingRetrievalLogger.info('Waiting on semaphore to be released', c.getCount()), await new Promise((e => setTimeout(e, 200)))
+			if (0 === entriesToProcess.length) {
+				IndexingRetrievalLogger.info('Waiting on semaphore to be released', c.getCount()), await new Promise((e => setTimeout(e, 200)))
 				continue
 			}
 			if (this.abortController.signal.aborted) return (0, d.Err)('Aborted')
-			const e = t.pop()
-			if (l.IndexingRetrievalLogger.info('[startSync]: ----------------------\nsyncing point nextSubtree' + JSON.stringify(e)), void 0 === e) break
-			const r = e.relativePath, p = i.join(this.repoInfo.workspaceUri.fsPath, r), m = c.withSemaphore((async () => {
+			const entry = entriesToProcess.pop()
+			if (IndexingRetrievalLogger.info('[startSync]: ----------------------\nsyncing point nextSubtree' + JSON.stringify(entry)), void 0 === entry) break
+			const r = entry.relativePath, filePath = i.join(this.repoInfo.workspaceUri.fsPath, r);
+			const m = c.withSemaphore((async () => {
 				if (this.abortController.signal.aborted) return (0, d.Err)('Aborted')
 				const c = await (0, d.wrapWithRes)((async () => await this.repoClient.syncMerkleSubtreeWithRetry({
 					repository: {
@@ -66,39 +103,39 @@ class IndexingJob {
 						remoteUrls: []
 					},
 					localPartialPath: {
-						hashOfNode: e.hash,
+						hashOfNode: entry.hash,
 						relativeWorkspacePath: (0, y.encryptPath)(r, this.repoInfo.pathEncryptionKey)
 					}
 				}, this.abortController.signal)))
 				if (this.abortController.signal.aborted) return (0, d.Err)('Aborted')
-				if (!c.ok() || void 0 === c.v) return t.push(e), l.IndexingRetrievalLogger.warn('[startSync]: res not ok or undefined'), (0, d.Ok)('res not ok or undefined')
+				if (!c.ok() || void 0 === c.v) return entriesToProcess.push(entry), IndexingRetrievalLogger.warn('[startSync]: res not ok or undefined'), (0, d.Ok)('res not ok or undefined')
 				const m = c.v
-				if ('match' === m.result.case || void 0 === m.result.value) return l.IndexingRetrievalLogger.debug('[startSync]: child just synced or value undefined'), (0, d.Ok)('child just synced or value undefined')
+				if ('match' === m.result.case || void 0 === m.result.value) return IndexingRetrievalLogger.debug('[startSync]: child just synced or value undefined'), (0, d.Ok)('child just synced or value undefined')
 				const g = m.result.value.children
 				if (0 === g.length) return s.add(r), (0, d.Ok)('Finished subtree')
 				g.forEach((e => {e.relativeWorkspacePath = (0, y.decryptPath)(e.relativeWorkspacePath, this.repoInfo.pathEncryptionKey)}))
 				const f = g.map((e => e.relativeWorkspacePath)), h = new Map
-				l.IndexingRetrievalLogger.debug('[startSync]: relativePathsOnServer: ' + JSON.stringify(f))
+				IndexingRetrievalLogger.debug('[startSync]: relativePathsOnServer: ' + JSON.stringify(f))
 				const E = f.map((async e => {
 					try {
 						let t = await this.merkleClient.getSubtreeHash(e)
 						return h.set(e, t), t
-					} catch (e) {return l.IndexingRetrievalLogger.debug('[startSync]: EXPECTED ERROR IF SERVER IS OUT OF SYNC filetree hash error: ' + e), '-1'}
+					} catch (e) {return IndexingRetrievalLogger.debug('[startSync]: EXPECTED ERROR IF SERVER IS OUT OF SYNC filetree hash error: ' + e), '-1'}
 				})), C = await Promise.all(E)
 				if (this.abortController.signal.aborted) return (0, d.Err)('Aborted')
-				if (l.IndexingRetrievalLogger.debug('[startSync]: localHashesForChildrenOnServer: ' + JSON.stringify(C)), C.length !== g.length) return l.IndexingRetrievalLogger.error('Number of children is not the same!'), (0, d.Err)('Number of children is not the same!')
+				if (IndexingRetrievalLogger.debug('[startSync]: localHashesForChildrenOnServer: ' + JSON.stringify(C)), C.length !== g.length) return IndexingRetrievalLogger.error('Number of children is not the same!'), (0, d.Err)('Number of children is not the same!')
 				const I = g.filter(((e, t) => '-1' === C[t] || '' === C[t]))
-				I.forEach((e => {a.add(e.relativeWorkspacePath)})), l.IndexingRetrievalLogger.debug('[startSync]: pathsToDelete: ' + JSON.stringify(Array.from(a), null, 2))
+				I.forEach((e => {a.add(e.relativeWorkspacePath)})), IndexingRetrievalLogger.debug('[startSync]: pathsToDelete: ' + JSON.stringify(Array.from(a), null, 2))
 				const _ = g.filter(((e, t) => {
 					const r = C[t]
-					return !(e.hashOfNode === r || '-1' === r || '' === r || (l.IndexingRetrievalLogger.debug('[startSync]: mismatched child: ' + e.relativeWorkspacePath), l.IndexingRetrievalLogger.debug('[startSync]: hashonserver: ' + e.hashOfNode), l.IndexingRetrievalLogger.debug('[startSync]: localhash: ' + r), 0))
+					return !(e.hashOfNode === r || '-1' === r || '' === r || (IndexingRetrievalLogger.debug('[startSync]: mismatched child: ' + e.relativeWorkspacePath), IndexingRetrievalLogger.debug('[startSync]: hashonserver: ' + e.hashOfNode), IndexingRetrievalLogger.debug('[startSync]: localhash: ' + r), 0))
 				}))
-				l.IndexingRetrievalLogger.debug('[startSync]: misMatchedChildren: ' + JSON.stringify(_, null, 2))
-				let B = (await (0, A.readdir)(p, {
+				IndexingRetrievalLogger.debug('[startSync]: misMatchedChildren: ' + JSON.stringify(_, null, 2))
+				let B = (await (0, fs.readdir)(filePath, {
 					encoding: 'utf-8',
 					withFileTypes: !0,
 					recursive: !1
-				})).map((e => (e.path = i.join(p, e.name), e))).map((async e => {
+				})).map((e => (e.path = i.join(filePath, e.name), e))).map((async e => {
 					let t = !1
 					try {'' === await this.merkleClient.getSubtreeHash((0, u.getRelativePath)(e.path)) && (t = !0)} catch (e) {t = !0}
 					return t ? -1 : e
@@ -107,20 +144,20 @@ class IndexingJob {
 				const T = await Promise.all(B), S = []
 				for (const e of T) -1 !== e && S.push(e)
 				const w = S.filter((e => e.isFile())).map((e => (0, u.getRelativePath)(e.path)))
-				if (l.IndexingRetrievalLogger.debug('[startSync]: trueChildrenFiles: ' + JSON.stringify(w, null, 2)), this.abortController.signal.aborted) return (0, d.Err)('Aborted')
+				if (IndexingRetrievalLogger.debug('[startSync]: trueChildrenFiles: ' + JSON.stringify(w, null, 2)), this.abortController.signal.aborted) return (0, d.Err)('Aborted')
 				const R = _.filter((e => w.includes(e.relativeWorkspacePath)))
-				l.IndexingRetrievalLogger.debug('[startSync]: filesToUpdate: ' + JSON.stringify(R, null, 2)), R.forEach((e => {n.add(e.relativeWorkspacePath)})), l.IndexingRetrievalLogger.debug('[startSync]: updates: ' + JSON.stringify(Array.from(n), null, 2))
+				IndexingRetrievalLogger.debug('[startSync]: filesToUpdate: ' + JSON.stringify(R, null, 2)), R.forEach((e => {n.add(e.relativeWorkspacePath)})), IndexingRetrievalLogger.debug('[startSync]: updates: ' + JSON.stringify(Array.from(n), null, 2))
 				const v = S.filter((e => e.isDirectory())).map((e => (0, u.getRelativePath)(e.path)))
-				l.IndexingRetrievalLogger.debug('[startSync]: trueChildrenDirectories: ' + JSON.stringify(v, null, 2))
+				IndexingRetrievalLogger.debug('[startSync]: trueChildrenDirectories: ' + JSON.stringify(v, null, 2))
 				const k = _.filter((e => v.includes(e.relativeWorkspacePath)))
-				l.IndexingRetrievalLogger.debug('[startSync]: directoriesToUpdate: ' + JSON.stringify(k, null, 2)), k.forEach((e => {
-					t.push({
+				IndexingRetrievalLogger.debug('[startSync]: directoriesToUpdate: ' + JSON.stringify(k, null, 2)), k.forEach((e => {
+					entriesToProcess.push({
 						relativePath: e.relativeWorkspacePath,
 						hash: h.get(e.relativeWorkspacePath)
 					})
-				})), l.IndexingRetrievalLogger.debug('[startSync]: subtreeQueue: ' + JSON.stringify(t))
+				})), IndexingRetrievalLogger.debug('[startSync]: subtreeQueue: ' + JSON.stringify(entriesToProcess))
 				const Q = v.filter((e => !f.includes(e))), N = w.filter((e => !f.includes(e)))
-				if (Q.forEach((e => s.add(e))), N.forEach((e => o.add(e))), l.IndexingRetrievalLogger.debug('[startSync]: newDirectoriesToSend: ' + JSON.stringify(Array.from(s))), l.IndexingRetrievalLogger.debug('[startSync]: newFilesToSend: ' + JSON.stringify(Array.from(o))), 0 === I.length && 0 === R.length && 0 === k.length && 0 === Q.length && 0 === N.length) if (w.length > 0) {
+				if (Q.forEach((e => s.add(e))), N.forEach((e => o.add(e))), IndexingRetrievalLogger.debug('[startSync]: newDirectoriesToSend: ' + JSON.stringify(Array.from(s))), IndexingRetrievalLogger.debug('[startSync]: newFilesToSend: ' + JSON.stringify(Array.from(o))), 0 === I.length && 0 === R.length && 0 === k.length && 0 === Q.length && 0 === N.length) if (w.length > 0) {
 					const e = w[0]
 					n.add(e)
 				} else if (v.length > 0) {
@@ -131,14 +168,14 @@ class IndexingJob {
 			}))
 			f.push(m)
 		}
-		if (g === this.MAX_NUM_ITERATIONS) return l.IndexingRetrievalLogger.error('startSync: There is likely an infinite loop here.'), (0, d.Ok)(!1)
+		if (g === this.MAX_NUM_ITERATIONS) return IndexingRetrievalLogger.error('startSync: There is likely an infinite loop here.'), (0, d.Ok)(!1)
 		const h = await Promise.all(f)
 		if (this.abortController.signal.aborted) return (0, d.Err)('Aborted')
-		h.forEach((e => {e.isErr() && l.IndexingRetrievalLogger.error(e.error())})), l.IndexingRetrievalLogger.debug('[startSync]: ------------------'), l.IndexingRetrievalLogger.debug('[startSync]: updates: ' + JSON.stringify(Array.from(n), null, 2)), l.IndexingRetrievalLogger.debug('[startSync]: newDirectoriesToSend: ' + JSON.stringify(Array.from(s))), l.IndexingRetrievalLogger.debug('[startSync]: newFilesToSend: ' + JSON.stringify(Array.from(o))), l.IndexingRetrievalLogger.debug('[startSync]: pathsToDelete: ' + JSON.stringify(Array.from(a))), l.IndexingRetrievalLogger.debug('[startSync]: ------------------')
+		h.forEach((e => {e.isErr() && IndexingRetrievalLogger.error(e.error())})), IndexingRetrievalLogger.debug('[startSync]: ------------------'), IndexingRetrievalLogger.debug('[startSync]: updates: ' + JSON.stringify(Array.from(n), null, 2)), IndexingRetrievalLogger.debug('[startSync]: newDirectoriesToSend: ' + JSON.stringify(Array.from(s))), IndexingRetrievalLogger.debug('[startSync]: newFilesToSend: ' + JSON.stringify(Array.from(o))), IndexingRetrievalLogger.debug('[startSync]: pathsToDelete: ' + JSON.stringify(Array.from(a))), IndexingRetrievalLogger.debug('[startSync]: ------------------')
 		let E = [...Array.from(n), ...Array.from(o)]
 		const C = Array.from(s)
 		let I = await this.updateNumberOfUploadJobs(E, C, this.repoInfo.workspaceUri.fsPath)
-		if (l.IndexingRetrievalLogger.info('[startSync]: numJobs: ' + I), I >= this.config.absoluteMaxNumberFiles) return l.IndexingRetrievalLogger.error('Too many jobs to upload. Aborting.'), this.status.set({
+		if (IndexingRetrievalLogger.info('[startSync]: numJobs: ' + I), I >= this.config.absoluteMaxNumberFiles) return IndexingRetrievalLogger.error('Too many jobs to upload. Aborting.'), this.status.set({
 			case: 'error',
 			error: 'Too many files to upload.'
 		}), (0, d.Err)('Too many files to upload.')
@@ -153,11 +190,11 @@ class IndexingJob {
 			relativePath: e,
 			updateType: m.FastUpdateFileRequest_UpdateType.ADD
 		}))))
-		return this.abortController.signal.aborted ? (0, d.Err)('Aborted') : B.isErr() ? (l.IndexingRetrievalLogger.error('Failed to upload files.'), (0, d.Err)(B.error())) : (0, d.Ok)(!0)
+		return this.abortController.signal.aborted ? (0, d.Err)('Aborted') : B.isErr() ? (IndexingRetrievalLogger.error('Failed to upload files.'), (0, d.Err)(B.error())) : (0, d.Ok)(!0)
 	}
 
 	async startRepoUpload (e) {
-		if (l.IndexingRetrievalLogger.info('Starting repository upload from scratch.'), 'onlyCallThisFromStartFastRemoteSync' !== e) return (0, d.Err)('You must call this from startFastRemoteSync')
+		if (IndexingRetrievalLogger.info('Starting repository upload from scratch.'), 'onlyCallThisFromStartFastRemoteSync' !== e) return (0, d.Err)('You must call this from startFastRemoteSync')
 		const t = await this.merkleClient.getAllFiles()
 		if (this.abortController.signal.aborted) return (0, d.Err)('Aborted')
 		const r = await this.syncFileListToServer(t.map((e => ({
@@ -165,21 +202,21 @@ class IndexingJob {
 			relativePath: (0, u.getRelativePath)(e),
 			updateType: m.FastUpdateFileRequest_UpdateType.ADD
 		}))))
-		return this.abortController.signal.aborted ? (0, d.Err)('Aborted') : r.isErr() ? (l.IndexingRetrievalLogger.error('Failed to upload files.'), (0, d.Err)(r.error())) : (0, d.Ok)(!0)
+		return this.abortController.signal.aborted ? (0, d.Err)('Aborted') : r.isErr() ? (IndexingRetrievalLogger.error('Failed to upload files.'), (0, d.Err)(r.error())) : (0, d.Ok)(!0)
 	}
 
 	async startFastRemoteSync (e) {
-		if (l.IndexingRetrievalLogger.info('Starting fast remote sync.'), this.abortController.signal.aborted) return (0, d.Ok)(!1)
+		if (IndexingRetrievalLogger.info('Starting fast remote sync.'), this.abortController.signal.aborted) return (0, d.Ok)(!1)
 		this.currentIndexingJobs.reset()
 		const t = await this.merkleClient.getNumEmbeddableFiles()
 		if (this.abortController.signal.aborted) return (0, d.Ok)(!1)
-		if (this.currentIndexingJobs.setTotalNumEmbeddableFiles(t), l.IndexingRetrievalLogger.info('Total num embeddable files: ' + t), t > this.config.absoluteMaxNumberFiles) return l.IndexingRetrievalLogger.error('Too many files to upload.'), this.status.set({
+		if (this.currentIndexingJobs.setTotalNumEmbeddableFiles(t), IndexingRetrievalLogger.info('Total num embeddable files: ' + t), t > this.config.absoluteMaxNumberFiles) return IndexingRetrievalLogger.error('Too many files to upload.'), this.status.set({
 			case: 'error',
 			error: 'Too many files to upload.'
 		}), (0, d.Err)('Too many files to upload.')
 		const r = await this.merkleClient.getSubtreeHash('.')
 		if (this.abortController.signal.aborted) return (0, d.Ok)(!1)
-		l.IndexingRetrievalLogger.info('Root hash: ' + r)
+		IndexingRetrievalLogger.info('Root hash: ' + r)
 		const n = 'onlyCallThisFromStartFastRemoteSync'
 		switch (e) {
 			case m.FastRepoInitHandshakeResponse_Status.EMPTY: {
@@ -188,7 +225,7 @@ class IndexingJob {
 				return this.abortController.signal.aborted ? (0, d.Ok)(!1) : e.isErr() ? (0, d.Err)(e.error()) : (0, d.Ok)(!0)
 			}
 			case m.FastRepoInitHandshakeResponse_Status.OUT_OF_SYNC: {
-				l.IndexingRetrievalLogger.info('In the out of sync case.'), this.status.set({ case: 'indexing-setup' })
+				IndexingRetrievalLogger.info('In the out of sync case.'), this.status.set({ case: 'indexing-setup' })
 				let e = await this.startSync(n)
 				return this.abortController.signal.aborted ? (0, d.Ok)(!1) : e.isErr() ? (0, d.Err)(e.error()) : (0, d.Ok)(!0)
 			}
@@ -204,19 +241,19 @@ class IndexingJob {
 	}
 
 	async getServerStatus () {
-		l.IndexingRetrievalLogger.info('Doing a startup handshake.'), l.IndexingRetrievalLogger.debug('Repository info: ' + JSON.stringify(this.repoInfo))
+		IndexingRetrievalLogger.info('Doing a startup handshake.'), IndexingRetrievalLogger.debug('Repository info: ' + JSON.stringify(this.repoInfo))
 		const e = await (async () => {
 			try {
 				if (this.context.storageUri) {
 					const e = a.Uri.joinPath(this.context.storageUri, 'embeddable_files.txt')
 					return await a.workspace.fs.writeFile(e, new Uint8Array), e.fsPath
 				}
-			} catch (e) {return void l.IndexingRetrievalLogger.error('Failed to create embeddable_files.txt: ' + (e instanceof Error ? e.message : 'unknown error'))}
+			} catch (e) {return void IndexingRetrievalLogger.error('Failed to create embeddable_files.txt: ' + (e instanceof Error ? e.message : 'unknown error'))}
 		})(), t = await this.initializeMerkleTreeWithRipgrepIgnore(e)
 		if (!t.ok()) return (0, d.Err)(t.error())
 		this.highLevelDescriptionJob.compute()
 		const r = async () => !0, n = await this.merkleClient.getSubtreeHash('.')
-		l.IndexingRetrievalLogger.info('Doing the initial handshake with hash: ' + n)
+		IndexingRetrievalLogger.info('Doing the initial handshake with hash: ' + n)
 		const s = await this.merkleClient.getNumEmbeddableFiles()
 		let o, i
 		try {
@@ -232,8 +269,8 @@ class IndexingJob {
 			}, this.abortController.signal), o.repoName === this.repoInfo.legacyRepoName && this.repoInfo.setUseLegacyRepoName(!0)
 		} catch (e) {i = e}
 		if (this.abortController.signal.aborted) return (0, d.Err)('Aborted')
-		if (void 0 === o) return l.IndexingRetrievalLogger.error('Handshake failed:'), l.IndexingRetrievalLogger.error(i), (0, d.Err)('Handshake failed.')
-		switch (l.IndexingRetrievalLogger.info('Handshake result:', JSON.stringify(o)), o.status) {
+		if (void 0 === o) return IndexingRetrievalLogger.error('Handshake failed:'), IndexingRetrievalLogger.error(i), (0, d.Err)('Handshake failed.')
+		switch (IndexingRetrievalLogger.info('Handshake result:', JSON.stringify(o)), o.status) {
 			case m.FastRepoInitHandshakeResponse_Status.EMPTY:
 				return a.cursor.registerIsNewIndexProvider(r), this.status.set({ case: 'not-indexed' }), (0, d.Ok)(o.status)
 			case m.FastRepoInitHandshakeResponse_Status.OUT_OF_SYNC:
@@ -253,10 +290,10 @@ class IndexingJob {
 
 	async initializeMerkleTreeWithRipgrepIgnore (e) {
 		try {
-			l.IndexingRetrievalLogger.debug('Initializing merkle tree.')
+			IndexingRetrievalLogger.debug('Initializing merkle tree.')
 			let t = performance.now()
 			if (this.abortController.signal.aborted) return (0, d.Err)('Aborted')
-			await this.merkleClient.initWithRipgrepIgnore(e, { maxNumFiles: this.config.absoluteMaxNumberFiles }), l.IndexingRetrievalLogger.info(`Finished initializing merkle tree in ${performance.now() - t} ms.`)
+			await this.merkleClient.initWithRipgrepIgnore(e, { maxNumFiles: this.config.absoluteMaxNumberFiles }), IndexingRetrievalLogger.info(`Finished initializing merkle tree in ${performance.now() - t} ms.`)
 			const r = await this.merkleClient.getNumEmbeddableFiles()
 			if (this.indexingIntent === T.IndexingIntent.FallBackToDefault && r > this.config.autoIndexingMaxNumFiles) return this.abortController.abort(), this.status.set({
 				case: 'not-auto-indexing',
@@ -267,7 +304,7 @@ class IndexingJob {
 	}
 
 	async startIndexingRepository () {
-		if (this.repoInfo.workspaceUri.fsPath === B.homedir()) return l.IndexingRetrievalLogger.error('We currently do not allow indexing the home directory.'), void this.status.set({
+		if (this.repoInfo.workspaceUri.fsPath === B.homedir()) return IndexingRetrievalLogger.error('We currently do not allow indexing the home directory.'), void this.status.set({
 			case: 'error',
 			error: 'We currently do not allow indexing the home directory. Please open a specific workspace in the home directory.'
 		})
@@ -275,34 +312,34 @@ class IndexingJob {
 		const e = await this.getServerStatus()
 		if (e.ok()) {
 			if (!this.abortController.signal.aborted) {
-				l.IndexingRetrievalLogger.debug('Starting to send up the repository.')
+				IndexingRetrievalLogger.debug('Starting to send up the repository.')
 				try {
 					const t = await this.startFastRemoteSync(e.v)
 					if (this.abortController.signal.aborted) return
 					if (t.isErr()) return void (!1 === this.abortController.signal.aborted ? (this.status.set({
 						case: 'error',
 						error: t.error().toString()
-					}), l.IndexingRetrievalLogger.error(t.error())) : l.IndexingRetrievalLogger.debug('Aborted', t.error()))
-				} catch (e) {return void (!1 === this.abortController.signal.aborted ? l.IndexingRetrievalLogger.error(e) : l.IndexingRetrievalLogger.debug('Aborted', e))}
-				this.abortController.signal.aborted || (this.currentIndexingJobs.set([]), l.IndexingRetrievalLogger.info('Finished indexing repository.'))
+					}), IndexingRetrievalLogger.error(t.error())) : IndexingRetrievalLogger.debug('Aborted', t.error()))
+				} catch (e) {return void (!1 === this.abortController.signal.aborted ? IndexingRetrievalLogger.error(e) : IndexingRetrievalLogger.debug('Aborted', e))}
+				this.abortController.signal.aborted || (this.currentIndexingJobs.set([]), IndexingRetrievalLogger.info('Finished indexing repository.'))
 			}
 		} else !1 === this.abortController.signal.aborted ? (this.status.set({
 			case: 'error',
 			error: e.error().toString()
-		}), l.IndexingRetrievalLogger.error(e.error())) : l.IndexingRetrievalLogger.debug('Aborted', e.error())
+		}), IndexingRetrievalLogger.error(e.error())) : IndexingRetrievalLogger.debug('Aborted', e.error())
 	}
 
-	async deletePathOnServer (e, t, r) {
+	async deletePathOnServer (path, toDeleted, signal) {
 		try {
 			let n = []
 			try {
-				const t = this.hackyGetSplineWhenYouCantRelyOnTree(e)
+				const t = this.hackyGetSplineWhenYouCantRelyOnTree(path)
 				n = t?.map((e => new m.PartialPathItem({
 					relativeWorkspacePath: (0, y.encryptPath)(e, this.repoInfo.pathEncryptionKey),
 					hashOfNode: ''
 				})))
-			} catch (e) {e instanceof Error && l.IndexingRetrievalLogger.warn('hackyGetSplineWhenYouCantRelyOnTree failed: ' + e.message)}
-			l.IndexingRetrievalLogger.debug('deleting directory: ' + t)
+			} catch (e) {e instanceof Error && IndexingRetrievalLogger.warn('hackyGetSplineWhenYouCantRelyOnTree failed: ' + e.message)}
+			IndexingRetrievalLogger.debug('deleting directory: ' + toDeleted)
 			let s = await this.repoClient.deleteFastUpdateFileWithRetry({
 				repository: {
 					...this.repoInfo.export(),
@@ -314,37 +351,41 @@ class IndexingJob {
 				},
 				partialPath: {
 					case: 'directory',
-					value: { relativeWorkspacePath: (0, y.encryptPath)(t, this.repoInfo.pathEncryptionKey), hashOfNode: '' }
+					value: {
+						relativeWorkspacePath: (0, y.encryptPath)(toDeleted, this.repoInfo.pathEncryptionKey),
+						hashOfNode: ''
+					}
 				},
 				ancestorSpline: n,
 				updateType: m.FastUpdateFileRequest_UpdateType.DELETE
-			}, r)
-			return s.status === m.FastUpdateFileResponse_Status.SUCCESS ? (0, d.Ok)({ relativePath: t }) : s.status === m.FastUpdateFileResponse_Status.EXPECTED_FAILURE ? (0, d.Err)('Expected failure') : (0, d.Err)('Unexpected failure')
+			}, signal)
+			return s.status === m.FastUpdateFileResponse_Status.SUCCESS ? (0, d.Ok)({ relativePath: toDeleted }) : s.status === m.FastUpdateFileResponse_Status.EXPECTED_FAILURE ? (0, d.Err)('Expected failure') : (0, d.Err)('Unexpected failure')
 		} catch (e) {return (0, d.Err)(e)}
 	}
 
 	async deleteFileListFromServer (e) {
-		l.IndexingRetrievalLogger.debug('Deleting ' + e.length + ' files from the server.')
+		IndexingRetrievalLogger.debug('Deleting ' + e.length + ' files from the server.')
 		try {
 			const t = [], r = 10
 			let n = 0, s = 0
 			for (; s < e.length;) {
 				if (this.abortController.signal.aborted) return (0, d.Err)('Aborted')
 				if (n < r) {
-					const r = e[s], o = i.join(this.repoInfo.workspaceUri.fsPath, r),
-						a = this.deletePathOnServer(o, r, this.abortController.signal)
+					const r = e[s]
+					const o = i.join(this.repoInfo.workspaceUri.fsPath, r)
+					const a = this.deletePathOnServer(o, r, this.abortController.signal)
 					t.push(a), a.finally((() => n--)), n++, s++
 				} else await new Promise((e => setTimeout(e, 300)))
 			}
 			const o = await Promise.allSettled(t)
-			l.IndexingRetrievalLogger.debug('[startSync]: pathsToDeleteResults: ' + JSON.stringify(o))
+			IndexingRetrievalLogger.debug('[startSync]: pathsToDeleteResults: ' + JSON.stringify(o))
 		} catch (e) {return (0, d.Err)(e)}
 		return (0, d.Ok)(!0)
 	}
 
 	async syncFileListToServer (e, t) {
 		if (this.abortController.signal.aborted) return (0, d.Err)('Aborted')
-		if (l.IndexingRetrievalLogger.info(`Uploading ${e.length} files.`), this.syncFileListToServerCalled) throw new Error('syncFileListToServer should only be called once in the life of the indexing job!')
+		if (IndexingRetrievalLogger.info(`Uploading ${e.length} files.`), this.syncFileListToServerCalled) throw new Error('syncFileListToServer should only be called once in the life of the indexing job!')
 		this.syncFileListToServerCalled = !0
 		const r = await this.merkleClient.getNumEmbeddableFiles()
 		if (this.abortController.signal.aborted) return (0, d.Err)('Aborted')
@@ -362,7 +403,7 @@ class IndexingJob {
 			}
 		for (; s.length > 0 || this.currentIndexingJobs.length > 0;) {
 			if (this.abortController.signal.aborted) return (0, d.Err)('Aborted')
-			for (l.IndexingRetrievalLogger.debug('fileQueue.length: ' + s.length); this.currentIndexingJobs.length >= o.current || 0 === s.length;) {
+			for (IndexingRetrievalLogger.debug('fileQueue.length: ' + s.length); this.currentIndexingJobs.length >= o.current || 0 === s.length;) {
 				if (await new Promise((e => setTimeout(e, i.current))), this.abortController.signal.aborted) return (0, d.Err)('Aborted')
 				if (0 === this.currentIndexingJobs.length) break
 				const e = this.currentIndexingJobs.get(), r = await Promise.race(e.map((e => e.future))), o = r.jobId,
@@ -370,18 +411,18 @@ class IndexingJob {
 				let c = e.findIndex((e => e.id === o))
 				if (-1 !== c) {
 					const t = e.splice(c, 1)
-					if (this.currentIndexingJobs.set(e), n += 1, 1 !== t.length) throw l.IndexingRetrievalLogger.error('VIOLATION: Completed job length is not 1'), new Error('VIOLATION: Completed job length is not 1')
-					if (void 0 === p || '' === p) l.IndexingRetrievalLogger.debug('Completed job successfully: ' + t[0].relativePath), a.incr(1), A(!0), this.currentIndexingJobs.updateNumJobsToGo(-1) else {
+					if (this.currentIndexingJobs.set(e), n += 1, 1 !== t.length) throw IndexingRetrievalLogger.error('VIOLATION: Completed job length is not 1'), new Error('VIOLATION: Completed job length is not 1')
+					if (void 0 === p || '' === p) IndexingRetrievalLogger.debug('Completed job successfully: ' + t[0].relativePath), a.incr(1), A(!0), this.currentIndexingJobs.updateNumJobsToGo(-1) else {
 						if (!0 === r.errorIsFatal) return this.currentIndexingJobs.updateNumJobsToGo(-1), (0, d.Err)(p ?? 'Unknown fatal error')
-						!0 === r.errorIsRetryable ? (l.IndexingRetrievalLogger.debug('Completed job unsuccessfully, will retry: ' + t[0].relativePath + ' error: ' + p), u.incr(1), A(!1, r.errorIsRateLimitError), t[0].errorCount < this.config.maxFileRetries ? s.push({
+						!0 === r.errorIsRetryable ? (IndexingRetrievalLogger.debug('Completed job unsuccessfully, will retry: ' + t[0].relativePath + ' error: ' + p), u.incr(1), A(!1, r.errorIsRateLimitError), t[0].errorCount < this.config.maxFileRetries ? s.push({
 							absolutePath: t[0].absolutePath,
 							errorCount: t[0].errorCount + 1,
 							relativePath: t[0].relativePath,
 							updateType: t[0].updateType
-						}) : (this.currentIndexingJobs.updateNumJobsToGo(-1), l.IndexingRetrievalLogger.debug('Ignoring file because it has too many errors: ' + t[0].relativePath))) : (this.currentIndexingJobs.updateNumJobsToGo(1), l.IndexingRetrievalLogger.debug(`Non-retryable error for file ${t[0].relativePath}: ` + p))
+						}) : (this.currentIndexingJobs.updateNumJobsToGo(-1), IndexingRetrievalLogger.debug('Ignoring file because it has too many errors: ' + t[0].relativePath))) : (this.currentIndexingJobs.updateNumJobsToGo(1), IndexingRetrievalLogger.debug(`Non-retryable error for file ${t[0].relativePath}: ` + p))
 					}
 				}
-				n % 50 == 0 && l.IndexingRetrievalLogger.info('Completed ' + n + ' jobs for absoluteDirectoryPath: ' + t)
+				n % 50 == 0 && IndexingRetrievalLogger.info('Completed ' + n + ' jobs for absoluteDirectoryPath: ' + t)
 			}
 			if (0 === s.length) continue
 			let e = s.shift(), r = (0, g.v4)()
@@ -389,7 +430,7 @@ class IndexingJob {
 				const t = e.absolutePath, n = e.relativePath, s = e.updateType, o = async () => {
 					let e = []
 					try {e = await this.merkleClient.getSpline(t)} catch (e) {
-						return l.IndexingRetrievalLogger.info('weird. maybe the file was deleted?'), {
+						return IndexingRetrievalLogger.info('weird. maybe the file was deleted?'), {
 							jobId: r,
 							error: 'weird. maybe the file was deleted?'
 						}
@@ -405,7 +446,7 @@ class IndexingJob {
 							errorIsRateLimitError: o.err.errorIsRateLimitError
 						} : { jobId: r }
 					} catch (e) {
-						return this.abortController.signal.aborted || l.IndexingRetrievalLogger.debug(e), {
+						return this.abortController.signal.aborted || IndexingRetrievalLogger.debug(e), {
 							jobId: r,
 							error: e,
 							errorIsRetryable: !0
@@ -422,7 +463,7 @@ class IndexingJob {
 				})
 			}
 		}
-		if (l.IndexingRetrievalLogger.debug('Finished uploading files in the while loop.'), this.abortController.signal.aborted) return (0, d.Err)('Aborted')
+		if (IndexingRetrievalLogger.debug('Finished uploading files in the while loop.'), this.abortController.signal.aborted) return (0, d.Err)('Aborted')
 		const c = this.currentIndexingJobs.get()
 		if (await Promise.allSettled(c.map((e => e.future))), this.abortController.signal.aborted) return (0, d.Err)('Aborted')
 		this.status.set({ case: 'creating-index' })
@@ -443,7 +484,7 @@ class IndexingJob {
 			let t = e ? e.toString() : 'Unknown error'
 			return this.status.set({ case: 'error', error: 'Creating index failed: ' + t }), (0, d.Err)(e)
 		}
-		return this.abortController.signal.aborted ? (0, d.Err)('Aborted') : (l.IndexingRetrievalLogger.debug('Should set to synced.'), this.status.set({ case: 'synced' }), this.currentIndexingJobs.setNumJobsToGo(0), this.currentIndexingJobs.forceUpdateProgressBar(), this.currentIndexingJobs.set([]), (0, d.Ok)(!0))
+		return this.abortController.signal.aborted ? (0, d.Err)('Aborted') : (IndexingRetrievalLogger.debug('Should set to synced.'), this.status.set({ case: 'synced' }), this.currentIndexingJobs.setNumJobsToGo(0), this.currentIndexingJobs.forceUpdateProgressBar(), this.currentIndexingJobs.set([]), (0, d.Ok)(!0))
 	}
 
 	async syncFile (e, t, r, n) {
@@ -465,7 +506,7 @@ class IndexingJob {
 				ancestorSpline: o,
 				updateType: n
 			}
-			l.IndexingRetrievalLogger.debug('syncing file: ' + t)
+			IndexingRetrievalLogger.debug('syncing file: ' + t)
 			let c = await this.repoClient.fastUpdateFile(A, this.abortController.signal)
 			return c.status === m.FastUpdateFileResponse_Status.FAILURE ? (0, d.Err)({
 				error: 'Failed to sync file (unexpected)',
