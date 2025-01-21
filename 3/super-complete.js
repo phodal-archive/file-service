@@ -1,80 +1,218 @@
 vscode.activate = async function (e) {
-	const t = Date.now()
-	W.ExtensionStorage.initialize(e), c.setWindsurfExtensionMetadata(E.EXTENSION_METADATA), R.MetadataProvider.initialize(e), V.ProductAnalyticsLogger.initialize(), T.GuestAccessManager.initialize(), _.DocumentAccessTimeTracker.initialize(), I.ExtensionServer.initialize(), B.LanguageServerClient.initialize(), await B.LanguageServerClient.getInstance().initAsync(), e.subscriptions.push(B.LanguageServerClient.getInstance()), l.WindsurfAuthProvider.initialize(e), e.subscriptions.push(l.WindsurfAuthProvider.getInstance()), (0, d.registerAuthHandlers)(e), await $.UnleashProvider.initialize(), (0, K.initializeUIExperiments)()
-	const completionProvider = new m.VscodeCompletionProvider
-	e.subscriptions.push(c.languages.registerInlineCompletionItemProvider({ pattern: '**' }, completionProvider));
-	k.ChatPanelProvider.initialize(e)
-	const r = k.ChatPanelProvider.getInstance()
-	P.UserSettingBroadcaster.initialize(), F.StatusBar.initialize(e), (0, d.initializeAuthSession)().then((() => {r.registerAsWebviewViewProvider()})).catch((e => {console.error('Initial auth session change failed', e)})), J.TerminalShellCommandProvider.initialize(e)
-	const i = new A.CommandManager(e)
-	new p.TerminalCommandManager(e), i.showCommandEducationBar(), new h.CascadeManager(e), c.languages.registerHoverProvider({ scheme: 'file' }, { provideHover: (0, Q.provideExplainProblemHover)(10) }), function (e, t, n, r) {
-		e.subscriptions.push(c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.IMPORT_VS_CODE_SETTINGS, (async () => {await (0, a.importSettingsForApplication)(N.AppType.VSCode)})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.IMPORT_VS_CODE_EXTENSIONS, (() => (0, o.importExtensionsForApplication)(N.AppType.VSCode))), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.IMPORT_CURSOR_SETTINGS, (async () => {await (0, a.importSettingsForApplication)(N.AppType.Cursor)})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.IMPORT_CURSOR_EXTENSIONS, (() => (0, o.importExtensionsForApplication)(N.AppType.Cursor))), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.ACCEPT_COMPLETION, (async (e, n) => {await (n?.()), await t.acceptedLastCompletion(e)})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_PROFILE, (() => {c.env.openExternal(c.Uri.parse('https://codeium.com/profile?referrer=extension'))})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_FEEDBACK, (() => {c.env.openExternal(c.Uri.parse('https://codeium.com/redirect/windsurf/feedback?referrer=extension')), V.ProductAnalyticsLogger.getInstance().logEvent(w.ProductEventType.PROVIDE_FEEDBACK)})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_DOCS, (() => {c.env.openExternal(c.Uri.parse('https://docs.codeium.com?referrer=extension'))})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_COMMUNITY, (() => {c.env.openExternal(c.Uri.parse('https://codeium.com/redirect/windsurf/community'))})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_FEATURE_REQUEST, (() => {c.env.openExternal(c.Uri.parse('https://codeium.com/redirect/windsurf/feature-request?referrer=extension'))})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_CHANGELOG, (() => {c.env.openExternal(c.Uri.parse('https://codeium.com/changelog'))})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.TOGGLE_CHAT_FOCUS, ((e = !0) => {
-			const t = (0, q.getSelectedTextFromEditor)();
-			(0, L.toggleChatFocus)(r, { textToInsert: t, isUserAction: e })
-		})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.TOGGLE_CHAT_FOCUS_FROM_TERMINAL, (async () => {
-			const e = await (0, z.getSelectedTextFromTerminal)();
-			(0, L.toggleChatFocus)(r, {
-				textToInsert: null !== e ? new w.TextBlock({
-					identifier: {
-						case: 'label',
-						value: 'terminal_selection'
-					}, content: e
-				}) : void 0
-			})
-		})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_GENERIC_URL, (e => {c.env.openExternal(c.Uri.parse(e))})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.SUPERCOMPLETE_ACCEPT, (() => {!n.acceptSupercomplete() && (0, G.hasDevExtension)() && console.error('[Supercomplete] Accepted without visible completion.')})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.SUPERCOMPLETE_ESCAPE, (() => {
-			const e = c.window.activeTextEditor
-			e && n.resetSupercomplete(e)
-		})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.SUPERCOMPLETE_FORCE, (() => {
-			const e = c.window.activeTextEditor, t = e?.selection.active
-			e && t && 'file' === e.document.uri.scheme && n.maybeTriggerSupercomplete(e, t, w.SupercompleteTriggerCondition.FORCED, !0)
-		})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.UPDATE_AUTOCOMPLETE_SPEED, (async e => {await P.UserSettingBroadcaster.getInstance().setAutocompleteSpeed(e)})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.GENERATE_FUNCTION_DOCSTRING, ((e, t, n) => {
-			const r = (0, Y.getFunctionInfo)(e, n)
-			c.window.activeTextEditor && (0, O.generateFunctionDocstring)(r.toBinary(), e, r.language)
-		})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.EXPLAIN, ((e, t, n) => {(0, x.explainCodeContextItem)(e, n), V.ProductAnalyticsLogger.getInstance().logEvent(w.ProductEventType.EXPLAIN_CODE_BLOCK)})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.REFACTOR_FUNCTION, (async (e, t, n) => {
-			const r = (0, Y.getFunctionInfo)(e, n)
-			c.window.activeTextEditor && await (0, M.refactorFunction)(r.toBinary(), e, r.language, c.window.activeTextEditor.document.uri)
-		})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.FIRE_PRODUCT_ANALYTICS_EVENT, (e => {
-			const t = (0, u.stringToEnum)(e, w.ProductEventType)
-			void 0 !== t && V.ProductAnalyticsLogger.getInstance().logEvent(t)
-		})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.SNOOZE_COMPLETIONS, (() => {F.StatusBar.getInstance().snooze()})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.CANCEL_SNOOZE_COMPLETIONS, (() => {F.StatusBar.getInstance().cancelSnooze()})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_COMMAND_SHORTCUT, (() => {
-			const e = c.window.activeTextEditor, t = e?.selection
-			t && v.InlineToolbarManager.getInstance().showCommandShortcuts(e, t)
-		})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.COMMAND_NO_POPUP, (async (e, t, n = w.CommandRequestSource.FUNCTION_CODE_LENS) => {await (0, M.commandNoPopup)(e, t, n)})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.EXPLAIN_PROBLEM, Q.explainProblem), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.RESTART_LS, (async () => {await B.LanguageServerClient.getInstance().restart()})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.RESET_PRODUCT_EDUCATION, (() => {D.OnboardingManager.getInstance().resetProductEducation()})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.EXECUTE_CASCADE_ACTION, (e => {
-			r.openView({
-				onFocus: () => {
-					!async function (e, t) {
-						const n = await B.LanguageServerClient.getInstance().client.startCascade({ metadata: R.MetadataProvider.getInstance().getMetadata() }),
-							r = new S.CascadeConfig({
-								plannerConfig: new S.CascadePlannerConfig({
-									plannerTypeConfig: {
-										case: 'conversational',
-										value: new S.CascadeConversationalPlannerConfig({})
-									}
-								})
-							})
-						await B.LanguageServerClient.getInstance().client.sendUserCascadeMessage(new b.SendUserCascadeMessageRequest({
-							metadata: R.MetadataProvider.getInstance().getMetadata(),
-							cascadeId: n.cascadeId,
-							items: t,
-							cascadeConfig: r
-						})), e.setCascadeId(n.cascadeId)
-					}(r, e)
-				}
-			})
-		})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_NEW_CASCADE_CONVERSATION, (() => {r.setCascadeId(''), c.commands.executeCommand(E.EXTENSION_COMMAND_IDS.TOGGLE_CHAT_FOCUS, !0)})), c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_CASCADE_CONVERSATION_FROM_TERMINAL, (() => {r.setCascadeId(''), c.commands.executeCommand(E.EXTENSION_COMMAND_IDS.TOGGLE_CHAT_FOCUS_FROM_TERMINAL, !0)})))
-	}(e, completionProvider, completionProvider.supercompleteProvider, r), function (e) {e.subscriptions.push(c.window.onDidChangeTextEditorVisibleRanges((e => {(0, C.refreshContextForTextEditorVisibleRanges)(e, B.LanguageServerClient.getInstance())}))), e.subscriptions.push(c.window.onDidChangeActiveTextEditor((e => {(0, C.refreshContextForActiveTextEditor)(e, B.LanguageServerClient.getInstance())}))), e.subscriptions.push(c.window.onDidChangeTextEditorSelection((e => {(0, C.refreshContextForActiveTextEditor)(e.textEditor, B.LanguageServerClient.getInstance())})))}(e), function (e) {e.subscriptions.push(J.TerminalShellCommandProvider.getInstance().onFinishedCommand((e => {(0, U.trackTerminalShellCommand)(e, B.LanguageServerClient.getInstance())})))}(e), (async () => {
-		await (0, j.loadOpenTextDocuments)()
-		const e = c.window.activeTextEditor?.document, t = e ? (0, j.getDocumentInfo)(e) : void 0
-		await B.LanguageServerClient.getInstance().client.refreshContextForIdeAction((0, y.createRefreshContextRequestFromOpenPaths)({
-			activeDocument: t?.documentInfo,
-			metadata: R.MetadataProvider.getInstance().getMetadata(),
-			experimentConfig: (0, H.parseExperimentConfig)()
-		}))
-	})(), (0, f.initializeGenerateCommitMessage)(e), v.InlineToolbarManager.getInstance().showSelectionNudge(), D.OnboardingManager.getInstance()
-	const s = Date.now() - t
-	V.ProductAnalyticsLogger.getInstance().logEvent(w.ProductEventType.WINDSURF_EXTENSION_ACTIVATED, BigInt(s)), !0 === P.UserSettingBroadcaster.getInstance().getUserConfiguration(g.USER_CONFIGURATION_KEYS.CASCADE_OPEN_ON_RELOAD) && c.commands.executeCommand(E.EXTENSION_COMMAND_IDS.TOGGLE_CHAT_FOCUS, !1)
-}
+    const t = Date.now();
+    W.ExtensionStorage.initialize(e);
+    c.setWindsurfExtensionMetadata(E.EXTENSION_METADATA);
+    R.MetadataProvider.initialize(e);
+    V.ProductAnalyticsLogger.initialize();
+    T.GuestAccessManager.initialize();
+    _.DocumentAccessTimeTracker.initialize();
+    I.ExtensionServer.initialize();
+    B.LanguageServerClient.initialize();
+    await B.LanguageServerClient.getInstance().initAsync();
+    e.subscriptions.push(B.LanguageServerClient.getInstance());
+    l.WindsurfAuthProvider.initialize(e);
+    e.subscriptions.push(l.WindsurfAuthProvider.getInstance());
+    (0, d.registerAuthHandlers)(e);
+    await $.UnleashProvider.initialize();
+    (0, K.initializeUIExperiments)();
 
+    const completionProvider = new m.VscodeCompletionProvider();
+    e.subscriptions.push(c.languages.registerInlineCompletionItemProvider({ pattern: '**' }, completionProvider));
+    k.ChatPanelProvider.initialize(e);
+    const r = k.ChatPanelProvider.getInstance();
+    P.UserSettingBroadcaster.initialize();
+    F.StatusBar.initialize(e);
+    (0, d.initializeAuthSession)()
+        .then(() => {
+            r.registerAsWebviewViewProvider();
+        })
+        .catch((e) => {
+            console.error('Initial auth session change failed', e);
+        });
+    J.TerminalShellCommandProvider.initialize(e);
+    const i = new A.CommandManager(e);
+    new p.TerminalCommandManager(e);
+    i.showCommandEducationBar();
+    new h.CascadeManager(e);
+    c.languages.registerHoverProvider({ scheme: 'file' }, { provideHover: (0, Q.provideExplainProblemHover)(10) });
+
+    (function (e, t, n, r) {
+        e.subscriptions.push(
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.IMPORT_VS_CODE_SETTINGS, async () => {
+                await (0, a.importSettingsForApplication)(N.AppType.VSCode);
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.IMPORT_VS_CODE_EXTENSIONS, () => (0, o.importExtensionsForApplication)(N.AppType.VSCode)),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.IMPORT_CURSOR_SETTINGS, async () => {
+                await (0, a.importSettingsForApplication)(N.AppType.Cursor);
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.IMPORT_CURSOR_EXTENSIONS, () => (0, o.importExtensionsForApplication)(N.AppType.Cursor)),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.ACCEPT_COMPLETION, async (e, n) => {
+                await (n?.());
+                await t.acceptedLastCompletion(e);
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_PROFILE, () => {
+                c.env.openExternal(c.Uri.parse('https://codeium.com/profile?referrer=extension'));
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_FEEDBACK, () => {
+                c.env.openExternal(c.Uri.parse('https://codeium.com/redirect/windsurf/feedback?referrer=extension'));
+                V.ProductAnalyticsLogger.getInstance().logEvent(w.ProductEventType.PROVIDE_FEEDBACK);
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_DOCS, () => {
+                c.env.openExternal(c.Uri.parse('https://docs.codeium.com?referrer=extension'));
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_COMMUNITY, () => {
+                c.env.openExternal(c.Uri.parse('https://codeium.com/redirect/windsurf/community'));
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_FEATURE_REQUEST, () => {
+                c.env.openExternal(c.Uri.parse('https://codeium.com/redirect/windsurf/feature-request?referrer=extension'));
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_CHANGELOG, () => {
+                c.env.openExternal(c.Uri.parse('https://codeium.com/changelog'));
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.TOGGLE_CHAT_FOCUS, (e = !0) => {
+                const t = (0, q.getSelectedTextFromEditor)();
+                (0, L.toggleChatFocus)(r, { textToInsert: t, isUserAction: e });
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.TOGGLE_CHAT_FOCUS_FROM_TERMINAL, async () => {
+                const e = await (0, z.getSelectedTextFromTerminal)();
+                (0, L.toggleChatFocus)(r, {
+                    textToInsert: null !== e ? new w.TextBlock({
+                        identifier: {
+                            case: 'label',
+                            value: 'terminal_selection'
+                        },
+                        content: e
+                    }) : void 0
+                });
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_GENERIC_URL, (e) => {
+                c.env.openExternal(c.Uri.parse(e));
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.SUPERCOMPLETE_ACCEPT, () => {
+                !n.acceptSupercomplete() && (0, G.hasDevExtension)() && console.error('[Supercomplete] Accepted without visible completion.');
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.SUPERCOMPLETE_ESCAPE, () => {
+                const e = c.window.activeTextEditor;
+                e && n.resetSupercomplete(e);
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.SUPERCOMPLETE_FORCE, () => {
+                const e = c.window.activeTextEditor, t = e?.selection.active;
+                e && t && 'file' === e.document.uri.scheme && n.maybeTriggerSupercomplete(e, t, w.SupercompleteTriggerCondition.FORCED, !0);
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.UPDATE_AUTOCOMPLETE_SPEED, async (e) => {
+                await P.UserSettingBroadcaster.getInstance().setAutocompleteSpeed(e);
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.GENERATE_FUNCTION_DOCSTRING, (e, t, n) => {
+                const r = (0, Y.getFunctionInfo)(e, n);
+                c.window.activeTextEditor && (0, O.generateFunctionDocstring)(r.toBinary(), e, r.language);
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.EXPLAIN, (e, t, n) => {
+                (0, x.explainCodeContextItem)(e, n);
+                V.ProductAnalyticsLogger.getInstance().logEvent(w.ProductEventType.EXPLAIN_CODE_BLOCK);
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.REFACTOR_FUNCTION, async (e, t, n) => {
+                const r = (0, Y.getFunctionInfo)(e, n);
+                c.window.activeTextEditor && await (0, M.refactorFunction)(r.toBinary(), e, r.language, c.window.activeTextEditor.document.uri);
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.FIRE_PRODUCT_ANALYTICS_EVENT, (e) => {
+                const t = (0, u.stringToEnum)(e, w.ProductEventType);
+                void 0 !== t && V.ProductAnalyticsLogger.getInstance().logEvent(t);
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.SNOOZE_COMPLETIONS, () => {
+                F.StatusBar.getInstance().snooze();
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.CANCEL_SNOOZE_COMPLETIONS, () => {
+                F.StatusBar.getInstance().cancelSnooze();
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_COMMAND_SHORTCUT, () => {
+                const e = c.window.activeTextEditor, t = e?.selection;
+                t && v.InlineToolbarManager.getInstance().showCommandShortcuts(e, t);
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.COMMAND_NO_POPUP, async (e, t, n = w.CommandRequestSource.FUNCTION_CODE_LENS) => {
+                await (0, M.commandNoPopup)(e, t, n);
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.EXPLAIN_PROBLEM, Q.explainProblem),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.RESTART_LS, async () => {
+                await B.LanguageServerClient.getInstance().restart();
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.RESET_PRODUCT_EDUCATION, () => {
+                D.OnboardingManager.getInstance().resetProductEducation();
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.EXECUTE_CASCADE_ACTION, (e) => {
+                r.openView({
+                    onFocus: () => {
+                        (async function (e, t) {
+                            const n = await B.LanguageServerClient.getInstance().client.startCascade({ metadata: R.MetadataProvider.getInstance().getMetadata() }),
+                                r = new S.CascadeConfig({
+                                    plannerConfig: new S.CascadePlannerConfig({
+                                        plannerTypeConfig: {
+                                            case: 'conversational',
+                                            value: new S.CascadeConversationalPlannerConfig({})
+                                        }
+                                    })
+                                });
+                            await B.LanguageServerClient.getInstance().client.sendUserCascadeMessage(new b.SendUserCascadeMessageRequest({
+                                metadata: R.MetadataProvider.getInstance().getMetadata(),
+                                cascadeId: n.cascadeId,
+                                items: t,
+                                cascadeConfig: r
+                            }));
+                            e.setCascadeId(n.cascadeId);
+                        })(r, e);
+                    }
+                });
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_NEW_CASCADE_CONVERSATION, () => {
+                r.setCascadeId('');
+                c.commands.executeCommand(E.EXTENSION_COMMAND_IDS.TOGGLE_CHAT_FOCUS, !0);
+            }),
+            c.commands.registerCommand(E.EXTENSION_COMMAND_IDS.OPEN_CASCADE_CONVERSATION_FROM_TERMINAL, () => {
+                r.setCascadeId('');
+                c.commands.executeCommand(E.EXTENSION_COMMAND_IDS.TOGGLE_CHAT_FOCUS_FROM_TERMINAL, !0);
+            })
+        );
+    })(e, completionProvider, completionProvider.supercompleteProvider, r);
+
+    (function (e) {
+        e.subscriptions.push(
+            c.window.onDidChangeTextEditorVisibleRanges((e) => {
+                (0, C.refreshContextForTextEditorVisibleRanges)(e, B.LanguageServerClient.getInstance());
+            }),
+            c.window.onDidChangeActiveTextEditor((e) => {
+                (0, C.refreshContextForActiveTextEditor)(e, B.LanguageServerClient.getInstance());
+            }),
+            c.window.onDidChangeTextEditorSelection((e) => {
+                (0, C.refreshContextForActiveTextEditor)(e.textEditor, B.LanguageServerClient.getInstance());
+            })
+        );
+    })(e);
+
+    (function (e) {
+        e.subscriptions.push(
+            J.TerminalShellCommandProvider.getInstance().onFinishedCommand((e) => {
+                (0, U.trackTerminalShellCommand)(e, B.LanguageServerClient.getInstance());
+            })
+        );
+    })(e);
+
+    (async () => {
+        await (0, j.loadOpenTextDocuments)();
+        const e = c.window.activeTextEditor?.document, t = e ? (0, j.getDocumentInfo)(e) : void 0;
+        await B.LanguageServerClient.getInstance().client.refreshContextForIdeAction((0, y.createRefreshContextRequestFromOpenPaths)({
+            activeDocument: t?.documentInfo,
+            metadata: R.MetadataProvider.getInstance().getMetadata(),
+            experimentConfig: (0, H.parseExperimentConfig)()
+        }));
+    })();
+
+    (0, f.initializeGenerateCommitMessage)(e);
+    v.InlineToolbarManager.getInstance().showSelectionNudge();
+    D.OnboardingManager.getInstance();
+
+    const s = Date.now() - t;
+    V.ProductAnalyticsLogger.getInstance().logEvent(w.ProductEventType.WINDSURF_EXTENSION_ACTIVATED, BigInt(s));
+    !0 === P.UserSettingBroadcaster.getInstance().getUserConfiguration(g.USER_CONFIGURATION_KEYS.CASCADE_OPEN_ON_RELOAD) && c.commands.executeCommand(E.EXTENSION_COMMAND_IDS.TOGGLE_CHAT_FOCUS, !1);
+};
 function resetSupercompleteUI (editor) {
 	o.commands.executeCommand('setContext', 'windsurf.supercompleteShown', false)
 	editor.hideSideHint()
