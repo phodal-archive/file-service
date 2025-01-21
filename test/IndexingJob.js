@@ -209,7 +209,7 @@ class RepoClientMultiplexer {
 	}
 
 	createRepoClient () {
-		A.IndexingRetrievalLogger.info('Creating Indexing Repo client: ', this.backendUrl)
+		IndexingRetrievalLogger.info('Creating Indexing Repo client: ', this.backendUrl)
 		const e = i.workspace.getConfiguration().get(m.DISABLE_HTTP2_CONFIG_ID, !1)
 		let t = { agent: new g.Agent({ keepAlive: !0 }) }, r = this.backendUrl, n = '2'
 		e && r.includes('repo42.cursor') && (r = r.replace('repo42.cursor', 'api2.cursor'), n = '1.1')

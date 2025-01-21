@@ -1,3 +1,35 @@
+// class DiffClient {
+//     diff() {}
+//     diffLines() {}
+// }
+//
+// class GitClient {
+//     getCommitChain() {}
+//     getCommitVerifyData() {}
+//     getRepoHeadSha() {}
+//     getTotalCommitCount() {}
+//     getVerifyCommit() {}
+//     throwIfCommitDoesntExist() {}
+// }
+//
+// class MerkleClient {
+//     computeMerkleTree() {}
+//     computeMerkleTreeWithRipgrepIgnore() {}
+//     deleteFile() {}
+//     getAllDirFilesToEmbed() {}
+//     getAllFiles() {}
+//     getHashesForFiles() {}
+//     getImportantPaths() {}
+//     getNextFileToEmbed() {}
+//     getNumEmbeddableFiles() {}
+//     getSpline() {}
+//     getSubtreeHash() {}
+//     init() {}
+//     initWithRipgrepIgnore() {}
+//     isTooBig() {}
+//     updateFile() {}
+//     updateRootDirectory() {}
+// }
 const client = require("./index.js");
 
 class IndexingRetrievalLogger {
@@ -15,7 +47,7 @@ const FastRepoInitHandshakeResponse_Status = Object.freeze({
     UNSPECIFIED: 'UNSPECIFIED',
 });
 
-class Indexing {
+class IndexingJob {
     status = new Map();
 
     constructor(path) {
@@ -24,6 +56,7 @@ class Indexing {
     }
 
     async startFastRemoteSync() {
+        console.log(this.merkleClient)
         const numbers = await this.merkleClient.getNumEmbeddableFiles()
         console.log(numbers)
         // const treeHash = await this.merkleClient.getSubtreeHash('.')
@@ -31,7 +64,7 @@ class Indexing {
     }
 }
 
-let indexing = new Indexing('/Users/phodal/test/bloop');
+let indexing = new IndexingJob('/Users/phodal/source/ai/co-unit');
 indexing.startFastRemoteSync().then(() => {
     console.log('done')
 });
