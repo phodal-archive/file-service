@@ -1,0 +1,34 @@
+{
+  "name": "@anysphere/file-service",
+  "version": "0.0.0-2ca0ad86",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "napi": {
+    "name": "file_service",
+    "triples": {
+      "additional": [
+        "aarch64-apple-darwin",
+        "aarch64-pc-windows-msvc",
+        "universal-apple-darwin",
+        "aarch64-unknown-linux-gnu"
+      ]
+    }
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@napi-rs/cli": "^2.16.2",
+    "ava": "^5.1.1"
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "optionalDependencies": {
+    "@anysphere/file-service-win32-x64-msvc": "0.0.0-2ca0ad86",
+    "@anysphere/file-service-darwin-x64": "0.0.0-2ca0ad86",
+    "@anysphere/file-service-linux-x64-gnu": "0.0.0-2ca0ad86",
+    "@anysphere/file-service-darwin-arm64": "0.0.0-2ca0ad86",
+    "@anysphere/file-service-win32-arm64-msvc": "0.0.0-2ca0ad86",
+    "@anysphere/file-service-darwin-universal": "0.0.0-2ca0ad86",
+    "@anysphere/file-service-linux-arm64-gnu": "0.0.0-2ca0ad86"
+  }
+}
