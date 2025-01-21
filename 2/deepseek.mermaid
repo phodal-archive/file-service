@@ -10,7 +10,6 @@ sequenceDiagram
     User->>FastIndexer: 激活扩展/触发索引
     activate FastIndexer
     FastIndexer->>RepoClientMultiplexer: 创建客户端 (https://repo42.cursor.sh)
-    Note over FastIndexer,RepoClientMultiplexer: 2025-01-21 11:00:10.934
 
     FastIndexer->>RepoIndexWatcher: 创建监控实例
     activate RepoIndexWatcher
@@ -28,7 +27,6 @@ sequenceDiagram
     BackendServer-->>RepoClient: 响应状态: OUT_OF_SYNC
     RepoClient-->>IndexingJob: 返回握手结果 (1858ms)
     deactivate RepoClient
-    Note over IndexingJob: 2025-01-21 11:00:12.906
 
     IndexingJob->>RepoClient: 启动快速同步
     activate RepoClient
@@ -41,10 +39,8 @@ sequenceDiagram
         RepoClient->>BackendServer: 文件上传请求
         BackendServer-->>RepoClient: 确认上传成功
         RepoClient-->>IndexingJob: 完成回调
-        Note over IndexingJob: 2025-01-21 11:00:15.636
     and 信号量控制
         IndexingJob->>IndexingJob: 等待信号量释放 (2次等待)
-        Note over IndexingJob: 2025-01-21 11:00:12.927/13.130
     end
 
     RepoClient-->>IndexingJob: 同步完成
@@ -56,4 +52,3 @@ sequenceDiagram
     deactivate RepoIndexWatcher
     FastIndexer-->>User: 索引完成
     deactivate FastIndexer
-    Note over IndexingJob: 2025-01-21 11:00:16.405

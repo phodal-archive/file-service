@@ -1,0 +1,48 @@
+sequenceDiagram
+    participant User as 用户
+    participant Editor as VSCode 编辑器
+    participant Supercomplete as SupercompleteProvider
+    participant LanguageServer as LanguageServerClient
+    participant Metadata as MetadataProvider
+    participant Unleash as UnleashProvider
+    participant Analytics as ProductAnalyticsLogger
+    participant GuestAccess as GuestAccessManager
+
+    User->>Editor: 输入字符或移动光标
+    Editor->>Supercomplete: onDidChangeTextEditorSelection 事件
+    Supercomplete->>Supercomplete: 防抖处理 (debounce 100ms)
+
+    alt 触发条件满足（如文本变化/光标移动）
+        Supercomplete->>Unleash: 检查实验开关 (isEnabled)
+        Unleash-->>Supercomplete: 返回是否启用 Supercomplete
+
+        alt Supercomplete 启用
+            Supercomplete->>Metadata: 获取用户元数据 (getMetadata)
+            Metadata-->>Supercomplete: 返回元数据
+
+            Supercomplete->>Editor: 收集文档信息 (getDocumentInfo)
+            Editor-->>Supercomplete: 返回文档内容/光标位置
+
+            Supercomplete->>LanguageServer: 发送流式请求 (handleStreamingCommand)
+            LanguageServer->>LanguageServer: 生成 Supercomplete 补全
+            LanguageServer-->>Supercomplete: 返回补全响应（含 diff/characterDiff）
+
+            alt 响应有效且未被过滤
+                Supercomplete->>Editor: 渲染补全（内联或侧边提示）
+                Editor-->>User: 显示补全内容
+
+                User->>Editor: 接受补全 (快捷键/点击)
+                Editor->>Supercomplete: acceptSupercomplete()
+                Supercomplete->>Editor: 应用代码变更 (editBuilder.replace)
+                Supercomplete->>LanguageServer: 发送反馈 (provideCompletionFeedback)
+                Supercomplete->>Analytics: 记录事件 (logEvent)
+                Supercomplete->>GuestAccess: 更新接受次数 (incrementAcceptedSupercompletes)
+            else 响应被过滤或无效
+                Supercomplete->>Supercomplete: 忽略响应
+            end
+        else Supercomplete 未启用
+            Supercomplete->>Supercomplete: 终止流程
+        end
+    else 未满足触发条件（如多光标/选中文本）
+        Supercomplete->>Supercomplete: 忽略事件
+    end
