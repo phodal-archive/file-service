@@ -1,0 +1,59 @@
+sequenceDiagram
+    participant User
+    participant FastIndexer
+    participant RepoIndexWatcher
+    participant IndexingJob
+    participant RepoClient
+    participant MerkleClient
+    participant BackendServer
+
+    User->>FastIndexer: 激活扩展/触发索引
+    activate FastIndexer
+    FastIndexer->>RepoClientMultiplexer: 创建客户端 (https://repo42.cursor.sh)
+    Note over FastIndexer,RepoClientMultiplexer: 2025-01-21 11:00:10.934
+
+    FastIndexer->>RepoIndexWatcher: 创建监控实例
+    activate RepoIndexWatcher
+    RepoIndexWatcher->>IndexingJob: 启动索引任务
+    activate IndexingJob
+
+    IndexingJob->>MerkleClient: 初始化Merkle树
+    activate MerkleClient
+    MerkleClient-->>IndexingJob: 完成初始化 (76ms)
+    deactivate MerkleClient
+
+    IndexingJob->>RepoClient: 启动握手
+    activate RepoClient
+    RepoClient->>BackendServer: 握手请求 (hash: 4727d4...)
+    BackendServer-->>RepoClient: 响应状态: OUT_OF_SYNC
+    RepoClient-->>IndexingJob: 返回握手结果 (1858ms)
+    deactivate RepoClient
+    Note over IndexingJob: 2025-01-21 11:00:12.906
+
+    IndexingJob->>RepoClient: 启动快速同步
+    activate RepoClient
+    IndexingJob->>MerkleClient: 获取可嵌入文件列表 (197个)
+    RepoClient->>BackendServer: 同步子树请求
+    BackendServer-->>RepoClient: 确认同步
+
+    par 并发上传
+        IndexingJob->>RepoClient: 上传文件1 (package.json)
+        RepoClient->>BackendServer: 文件上传请求
+        BackendServer-->>RepoClient: 确认上传成功
+        RepoClient-->>IndexingJob: 完成回调
+        Note over IndexingJob: 2025-01-21 11:00:15.636
+    and 信号量控制
+        IndexingJob->>IndexingJob: 等待信号量释放 (2次等待)
+        Note over IndexingJob: 2025-01-21 11:00:12.927/13.130
+    end
+
+    RepoClient-->>IndexingJob: 同步完成
+    deactivate RepoClient
+
+    IndexingJob-->>RepoIndexWatcher: 完成索引
+    deactivate IndexingJob
+    RepoIndexWatcher-->>FastIndexer: 状态更新
+    deactivate RepoIndexWatcher
+    FastIndexer-->>User: 索引完成
+    deactivate FastIndexer
+    Note over IndexingJob: 2025-01-21 11:00:16.405

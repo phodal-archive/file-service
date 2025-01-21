@@ -1,0 +1,71 @@
+sequenceDiagram
+    participant User
+    participant FastIndexer
+    participant RepoClientMultiplexer
+    participant RepoIndexWatcher
+    participant IndexingJob
+    participant MerkleClient
+    participant BackendServer
+    participant NetworkMonitor
+%% ===== 阶段1：初始化 =====
+    User ->> FastIndexer: 激活扩展(vscode.activate)
+    activate FastIndexer
+    FastIndexer ->> RepoClientMultiplexer: new(accessToken, backendUrl)
+    RepoClientMultiplexer ->> BackendServer: HTTP/2连接池创建(keepAlive)
+    Note over RepoClientMultiplexer: 多路复用配置：<br/>- ALPN协议协商<br/>- Gzip压缩<br/>- 400请求/连接
+    FastIndexer ->> RepoIndexWatcher: 启动监控(6分钟间隔)
+    activate RepoIndexWatcher
+    RepoIndexWatcher ->> IndexingJob: 创建索引任务
+    activate IndexingJob
+%% ===== 阶段2：Merkle树构建 =====
+    IndexingJob ->> MerkleClient: initWithRipgrepIgnore()
+    activate MerkleClient
+    MerkleClient ->> MerkleClient: 执行流程：<br/>1. 扫描.gitignore<br/>2. 构建哈希树<br/>3. 排除大文件(>100KB)
+    MerkleClient -->> IndexingJob: 返回统计：<br/>- 197个可嵌入文件<br/>- 根哈希4727d4...
+    deactivate MerkleClient
+    Note right of MerkleClient: 使用Ripgrep加速文件遍历
+%% ===== 阶段3：握手协议 =====
+    IndexingJob ->> RepoClientMultiplexer: handshakeWithRetry()
+    activate RepoClientMultiplexer
+    RepoClientMultiplexer ->> BackendServer: POST /handshake<br/>包含：<br/>- 根哈希<br/>- 代码库元数据
+    BackendServer -->> RepoClientMultiplexer: 响应结构：<br/>{<br/> "status": "OUT_OF_SYNC",<br/> "codebases": [...]<br/>}
+    RepoClientMultiplexer -->> IndexingJob: 返回状态码和差异信息
+    deactivate RepoClientMultiplexer
+    Note over IndexingJob, BackendServer: 指数退避重试策略：<br/>初始2s → 最大120s
+%% ===== 阶段4：增量同步 =====
+    IndexingJob ->> IndexingJob: 启动差异分析
+    activate IndexingJob
+    loop 目录树遍历
+        IndexingJob ->> MerkleClient: getSubtreeHash(path)
+        MerkleClient -->> IndexingJob: 返回目录哈希
+        IndexingJob ->> RepoClientMultiplexer: syncMerkleSubtree()
+        RepoClientMultiplexer ->> BackendServer: 提交哈希对比
+        BackendServer -->> RepoClientMultiplexer: 返回差异文件列表
+    end
+
+%% ===== 阶段5：并发上传 =====
+    IndexingJob ->> IndexingJob: 构建任务队列(197文件)
+    par 动态并发控制
+        loop 信号量机制
+            IndexingJob ->> IndexingJob: acquireSemaphore(concurrentUploads=2)
+            IndexingJob ->> RepoClientMultiplexer: fastUpdateFile()
+            RepoClientMultiplexer ->> BackendServer: 分块上传文件
+            BackendServer -->> RepoClientMultiplexer: 201 Created
+            RepoClientMultiplexer -->> IndexingJob: 回调通知
+            IndexingJob ->> IndexingJob: releaseSemaphore()
+        end
+    and 流量整形
+        IndexingJob ->> NetworkMonitor: 监测网络变化
+        NetworkMonitor ->> RepoClientMultiplexer: 触发连接刷新<br/>当检测到：<br/>- IP变化<br/>- 网络中断
+    end
+
+%% ===== 阶段6：完成处理 =====
+    IndexingJob ->> RepoClientMultiplexer: ensureIndexCreated()
+    RepoClientMultiplexer ->> BackendServer: 提交索引构建请求
+    BackendServer -->> RepoClientMultiplexer: 确认索引就绪
+    IndexingJob -->> RepoIndexWatcher: 完成回调
+    deactivate IndexingJob
+    RepoIndexWatcher -->> FastIndexer: 更新状态为synced
+    deactivate RepoIndexWatcher
+    FastIndexer -->> User: 显示完成通知
+    deactivate FastIndexer
