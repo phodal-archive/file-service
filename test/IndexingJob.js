@@ -24,6 +24,221 @@ function encryptPath (path, key) {
 const y = {}
 y.encryptPath = encryptPath
 
+t.HighLevelDescriptionJob = class {
+	constructor (e, t, r) {this.repoClient = e, this.merkleClient = t, this.context = r, this.abortController = new AbortController}
+
+	async compute () {
+		try {
+			const e = await this.merkleClient.getImportantPaths(100), t = this.context.storageUri
+			if (void 0 === t) return
+			const r = i.Uri.joinPath(t, d)
+			a.IndexingRetrievalLogger.debug(`Computing high level folder description for ${e.length} files at ${r}`)
+			try {
+				const t = (await i.workspace.fs.readFile(r)).toString(), n = t.split('\n')[0]
+				if (void 0 === n || n.length < 3) throw new Error('Invalid file content')
+				const s = JSON.parse(n), o = Date.now() - 6048e5
+				if (s.timestamp > o) {
+					s.paths = e.map((e => (0, u.getRelativePath)(e)))
+					const n = t.split('\n').slice(1).join('\n'), o = JSON.stringify(s) + '\n' + n
+					return void await i.workspace.fs.writeFile(r, Buffer.from(o, 'utf8'))
+				}
+			} catch (e) {a.IndexingRetrievalLogger.warn('Error reading high level folder description. Ignoring.', e)}
+			const n = { timestamp: Date.now() - 5184e5, paths: e.map((e => (0, u.getRelativePath)(e))) }
+			await i.workspace.fs.writeFile(r, Buffer.from(JSON.stringify(n) + '\n', 'utf8')), n.timestamp = Date.now() - 5184e5
+			const s = await this.computeFull(e)
+			if (void 0 === s) return
+			const o = JSON.stringify(n) + '\n' + s
+			await i.workspace.fs.writeFile(r, Buffer.from(o, 'utf8'))
+		} catch (e) {a.IndexingRetrievalLogger.warn('Error computing high level folder description. Ignoring.', e)}
+	}
+
+	async computeFull (e) {
+		try {
+			const t = e.map((e => (0, u.getRelativePath)(e))), r = i.workspace.workspaceFolders,
+				n = r?.at(0)?.uri.fsPath ?? '/', s = e.map((async e => {
+					const t = await i.workspace.fs.stat(i.Uri.file(e))
+					if (t && t.type === i.FileType.File && t.size < 1e5) {
+						const t = await i.workspace.fs.readFile(i.Uri.file(e))
+						return new l.GetHighLevelFolderDescriptionRequest_Readme({
+							contents: t.toString(),
+							relativeWorkspacePath: (0, u.getRelativePath)(e)
+						})
+					}
+				})), o = await Promise.all(s)
+			return (await this.repoClient.getHighLevelFolderDescription({
+				workspaceRootPath: n,
+				topLevelRelativeWorkspacePaths: t,
+				readmes: o.filter((e => void 0 !== e))
+			})).description
+		} catch (e) {a.IndexingRetrievalLogger.warn('Error computing full high level folder description. Ignoring.', e)}
+	}
+
+	dispose () {this.abortController.abort()}
+}
+
+class RepoClientMultiplexer {
+	constructor (e, t) {this.accessToken = e, this.backendUrl = t, this.repoClientUsageCount = 0, this.cachedExpirationResult = null, this.disposables = [], this.numMsForRequestToResetConnection = 1e4, this.networkChangeAbortController = new AbortController, this.repoClient = this.createRepoClient(), this.disposables.push(f.workspace.onDidChangeConfiguration((e => {e.affectsConfiguration(m.DISABLE_HTTP2_CONFIG_ID) && this.refreshRepoClient()}))), this.networkChangeMonitor = new h.NetworkChangeMonitor(5e3, (() => {this.refreshRepoClient(), this.networkChangeAbortController.abort(), this.networkChangeAbortController = new AbortController}))}
+
+	resetConnectionIfIpChanged () {this.networkChangeMonitor.triggerCallbackIfDisconnected(this.backendUrl, this.accessToken)}
+
+	createAbortAndErrorInterceptor () {return (0, E.createAbortErrorAndTimeoutInterceptor)((() => this.resetConnectionIfIpChanged()), this.numMsForRequestToResetConnection)}
+
+	dispose () {this.disposables.forEach((e => e.dispose()))}
+
+	getExpirationTime (e) {return 1e3 * (0, c.decodeJwt)(e).exp}
+
+	isAlmostExpired (e) {
+		if (null === this.cachedExpirationResult || this.cachedExpirationResult.accessToken !== e || this.cachedExpirationResult.cacheExpiration < Date.now()) {
+			const t = this.getExpirationTime(e) - 3e5
+			return Date.now() > t ? (this.cachedExpirationResult = null, !0) : (this.cachedExpirationResult = {
+				accessToken: e,
+				cacheExpiration: t
+			}, !1)
+		}
+		return !1
+	}
+
+	refreshRepoClient () {this.repoClientUsageCount = 0, this.repoClient = this.createRepoClient()}
+
+	get () {return this.repoClientUsageCount++, this.repoClientUsageCount > 500 && this.refreshRepoClient(), this.repoClient}
+
+	async syncMerkleSubtreeWithRetry (e, t) {
+		let r = 2e3
+		for (; r < 6e4;) {
+			if (t.aborted) throw new Error('aborted')
+			try {
+				return await this.repoClient.syncMerkleSubtree(e, {
+					signal: AbortSignal.any([t, this.networkChangeAbortController.signal]),
+					timeoutMs: r
+				})
+			} catch (e) {
+				if (t.aborted) throw e
+				const n = new Promise((e => setTimeout(e, r))), s = new Promise(((e, r) => {
+					const s = () => r(new Error('aborted'))
+					t.addEventListener('abort', s, { once: !0 }), n.finally((() => t.removeEventListener('abort', s)))
+				}))
+				await Promise.race([n, s]), r *= 2, A.IndexingRetrievalLogger.warn(`Retrying sync merkle subtree with timeout ${r}. Error: `, e)
+			}
+		}
+		throw new Error('timeout in sync merkle subtree')
+	}
+
+	async deleteFastUpdateFileWithRetry (e, t) {
+		let r = 1e4
+		for (; r < 24e4;) {
+			if (t.aborted) throw new Error('aborted')
+			try {
+				return await this.get().fastUpdateFile(e, {
+					signal: AbortSignal.any([t, this.networkChangeAbortController.signal]),
+					timeoutMs: r
+				})
+			} catch (e) {
+				if (t.aborted) throw e
+				const n = new Promise((e => setTimeout(e, r))), s = new Promise(((e, r) => {
+					const s = () => r(new Error('aborted'))
+					t.addEventListener('abort', s, { once: !0 }), n.finally((() => t.removeEventListener('abort', s)))
+				}))
+				await Promise.race([n, s]), r *= 2, A.IndexingRetrievalLogger.warn(`Retrying fast update file (delete) with timeout ${r}. Error: `, e)
+			}
+		}
+		throw new Error('timeout in fast update file (delete)')
+	}
+
+	async handshakeWithRetry (e, t) {
+		let r = 2e3
+		for (; r < 12e4;) {
+			if (t.aborted) throw new Error('aborted')
+			try {
+				const n = performance.now()
+				A.IndexingRetrievalLogger.info('Handshake start')
+				const s = await this.get().fastRepoInitHandshake(e, {
+					signal: AbortSignal.any([t, this.networkChangeAbortController.signal]),
+					timeoutMs: r
+				}), o = performance.now()
+				if (A.IndexingRetrievalLogger.info('Handshake timing: ' + (o - n)), s.status === p.FastRepoInitHandshakeResponse_Status.FAILURE) throw new Error('FastRepoInitHandshakeResponse_Status.FAILURE in handshakeWithRetry')
+				if (s.status === p.FastRepoInitHandshakeResponse_Status.UNSPECIFIED) throw new Error('FastRepoInitHandshakeResponse_Status.UNSPECIFIED in handshakeWithRetry')
+				return s
+			} catch (e) {
+				if (t.aborted) throw e
+				e instanceof a.ConnectError && e.code === a.Code.FailedPrecondition && this.refreshRepoClient()
+				const n = new Promise((e => setTimeout(e, r))), s = new Promise(((e, r) => {
+					const s = () => r(new Error('aborted'))
+					t.addEventListener('abort', s, { once: !0 }), n.finally((() => t.removeEventListener('abort', s)))
+				}))
+				await Promise.race([n, s]), r *= 2, A.IndexingRetrievalLogger.warn(`Retrying handshake with timeout ${r}. Error: `, e)
+			}
+		}
+		throw new Error('timeout in handshake with retry')
+	}
+
+	async ensureIndexCreatedWithRetry (e, t) {
+		let r = 2e3
+		const n = 12e4
+		for (; r < n;) {
+			if (t.aborted) throw new Error('aborted')
+			try {
+				return await this.get().ensureIndexCreated(e, {
+					signal: AbortSignal.any([t, this.networkChangeAbortController.signal]),
+					timeoutMs: r
+				})
+			} catch (e) {
+				if (t.aborted) throw e
+				if (2 * r >= n) throw e
+				const s = new Promise((e => setTimeout(e, r))), o = new Promise(((e, r) => {
+					const n = () => r(new Error('aborted'))
+					t.addEventListener('abort', n, { once: !0 }), s.finally((() => t.removeEventListener('abort', n)))
+				}))
+				await Promise.race([s, o]), r *= 2, A.IndexingRetrievalLogger.warn(`Retrying ensure index created with timeout ${r}. Error: `, e)
+			}
+		}
+		throw new Error('timeout in ensure index created with retry')
+	}
+
+	async fastUpdateFile (e, t) {
+		return this.get().fastUpdateFile(e, {
+			timeoutMs: 18e4,
+			signal: AbortSignal.any([t, this.networkChangeAbortController.signal])
+		})
+	}
+
+	async getHighLevelFolderDescription (e) {
+		return this.get().getHighLevelFolderDescription(e, {
+			timeoutMs: 18e4,
+			signal: this.networkChangeAbortController.signal
+		})
+	}
+
+	createRepoClient () {
+		A.IndexingRetrievalLogger.info('Creating Indexing Repo client: ', this.backendUrl)
+		const e = i.workspace.getConfiguration().get(m.DISABLE_HTTP2_CONFIG_ID, !1)
+		let t = { agent: new g.Agent({ keepAlive: !0 }) }, r = this.backendUrl, n = '2'
+		e && r.includes('repo42.cursor') && (r = r.replace('repo42.cursor', 'api2.cursor'), n = '1.1')
+		const s = r.includes('lclhst.build') || r.includes('localhost') ? {
+			rejectUnauthorized: !1,
+			ALPNProtocols: ['h2']
+		} : {}, o = (0, l.createConnectTransport)({
+			httpVersion: n, ...'1.1' === n ? t : {},
+			baseUrl: r,
+			interceptors: [e => t => i.tracing.runInSpan(`${u.RepositoryService.typeName}.${t.method.name}`, (() => e(t))), this.createAbortAndErrorInterceptor(), e => async t => {
+				if (this.isAlmostExpired(this.accessToken)) {
+					await i.cursor.triggerRefreshCursorAuthToken()
+					const e = i.cursor.getCursorAuthToken()
+					e && (this.accessToken = e)
+				}
+				return t.header.set('Authorization', `Bearer ${this.accessToken}`), await e(t)
+			}, e => async t => (i.cursor.getAllRequestHeadersExceptAccessToken({
+				req: t,
+				backupRequestId: (0, d.randomUUID)()
+			}), await e(t))],
+			jsonOptions: { ignoreUnknownFields: !0 },
+			nodeOptions: { ...s },
+			sendCompression: l.compressionGzip,
+			acceptCompression: [l.compressionGzip]
+		})
+		return (0, a.createPromiseClient)(u.RepositoryService, o)
+	}
+}
+
 class IndexingRetrievalLogger {
 	static debug (e) {console.log(e)}
 	static info (e) {console.log(e)}
