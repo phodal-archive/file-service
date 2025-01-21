@@ -50,7 +50,6 @@ let lines = diffClient.diffLines("a\nb", "b\nb");
 console.log(lines)
 
 let merkleClient = new module.MerkleClient(".");
-merkleClient.init()
 merkleClient.getAllFiles().then(files => {
     console.log(files)
 })
