@@ -1,0 +1,52 @@
+sequenceDiagram
+    participant IndexingJob
+    participant RepoClientMultiplexer
+    participant RepoClient
+    participant MerkleClient
+    participant Server
+
+    Note over IndexingJob: 初始化阶段
+    IndexingJob->>RepoClientMultiplexer: 创建RepoClient()
+    RepoClientMultiplexer->>RepoClient: new RepoClient()
+    Note right of RepoClient: 日志: Creating Indexing Repo client
+
+    IndexingJob->>MerkleClient: new MerkleClient()
+    Note right of MerkleClient: 日志: Creating merkle client
+
+    Note over IndexingJob: 握手阶段
+    IndexingJob->>RepoClientMultiplexer: handshakeWithRetry()
+    RepoClientMultiplexer->>RepoClient: fastRepoInitHandshake()
+    RepoClient->>Server: POST /handshake (根哈希)
+    Server-->>RepoClient: STATUS_OUT_OF_SYNC
+    RepoClient-->>RepoClientMultiplexer: 响应结果
+    RepoClientMultiplexer-->>IndexingJob: 返回OUT_OF_SYNC
+    Note right of Server: 日志: Handshake result
+
+    Note over IndexingJob: Merkle树同步
+    loop 同步子树流程
+        IndexingJob->>MerkleClient: getSubtreeHash(路径)
+        MerkleClient-->>IndexingJob: 返回子树哈希
+        IndexingJob->>RepoClientMultiplexer: syncMerkleSubtreeWithRetry()
+        RepoClientMultiplexer->>RepoClient: syncMerkleSubtree()
+        RepoClient->>Server: 同步请求
+        Server-->>RepoClient: 差异文件列表
+        RepoClient-->>IndexingJob: 同步结果
+    end
+
+    Note over IndexingJob: 文件上传阶段
+    par 并发上传
+        IndexingJob->>RepoClientMultiplexer: fastUpdateFile()
+        RepoClientMultiplexer->>RepoClient: fastUpdateFile()
+        RepoClient->>Server: 上传文件内容
+        Server-->>RepoClient: ACK
+        RepoClient-->>IndexingJob: 进度更新
+    end
+    Note right of Server: 日志: Completed job successfully
+
+    Note over IndexingJob: 索引提交
+    IndexingJob->>RepoClientMultiplexer: ensureIndexCreatedWithRetry()
+    RepoClientMultiplexer->>RepoClient: ensureIndexCreated()
+    RepoClient->>Server: 创建索引请求
+    Server-->>RepoClient: 创建成功
+    RepoClient-->>IndexingJob: 最终确认
+    Note right of Server: 日志: Finished indexing
