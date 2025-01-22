@@ -1,0 +1,51 @@
+sequenceDiagram
+    participant User as VSCode用户
+    participant VSCode as VSCode事件系统
+    participant FileSyncer
+    participant SyncerAndUploader
+    participant FileSyncClient
+    participant RecentUpdatesManager
+    participant Server as 后端服务器
+
+    Note over User,Server: 初始化阶段
+    FileSyncer->>FileSyncClient: 创建客户端(init)
+    FileSyncer->>RecentUpdatesManager: 初始化更新记录
+    FileSyncer->>VSCode: 注册文档/编辑器事件监听
+
+    Note over User,Server: 用户修改文档
+    User->>VSCode: 编辑文档内容
+    VSCode->>FileSyncer: 触发onDidChangeTextDocument事件
+    FileSyncer->>FileSyncer: 检查是否应同步(文件大小、语言等)
+    alt 需要同步
+        FileSyncer->>RecentUpdatesManager: 记录变更(pushToRecentUpdatesManager)
+        FileSyncer->>SyncerAndUploader: 调用syncDocumentChanges
+        SyncerAndUploader->>SyncerAndUploader: 防抖处理(合并多次变更)
+        SyncerAndUploader->>FileSyncClient: 调用syncFile(发送差异)
+        FileSyncClient->>Server: 发送文件差异请求
+        Server-->>FileSyncClient: 返回同步结果
+        alt 同步成功
+            FileSyncClient->>RecentUpdatesManager: 清除已同步的变更(clearUpdatesUpToVersion)
+            SyncerAndUploader->>SyncerAndUploader: 增加连续成功计数
+        else 同步失败
+            FileSyncClient->>SyncerAndUploader: 触发重试机制
+            SyncerAndUploader->>FileSyncClient: 回退到uploadFile(全量上传)
+        end
+    end
+
+    Note over User,Server: 用户切换标签页
+    User->>VSCode: 切换可见编辑器
+    VSCode->>FileSyncer: 触发onDidChangeVisibleTextEditors
+    FileSyncer->>FileSyncer: 收集所有可见文件
+    loop 每个可见文件
+        FileSyncer->>SyncerAndUploader: 调用syncFullDocument
+        SyncerAndUploader->>FileSyncClient: 调用uploadFile(全量上传)
+        FileSyncClient->>Server: 发送文件内容
+        Server-->>FileSyncClient: 返回上传结果
+    end
+
+    Note over User,Server: 定时配置更新
+    FileSyncClient->>Server: 定期请求fsConfig
+    Server-->>FileSyncClient: 返回最新配置
+    FileSyncClient->>FileSyncer: 更新配置参数(rateLimiter等)
+    FileSyncer->>SyncerAndUploader: 传递新配置
+    SyncerAndUploader->>RecentUpdatesManager: 更新配置
