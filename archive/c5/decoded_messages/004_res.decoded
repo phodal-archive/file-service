@@ -1,0 +1,80 @@
+Response for: POST https://server.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1: "bot-e179f538-0766-4ce2-8b54-27ea303102ea"
+2 {
+  1: 1736527840
+  2: 657540114
+}
+3: "\n\nI"
+4: 3
+
+
+Message 2:
+1: "bot-e179f538-0766-4ce2-8b54-27ea303102ea"
+2 {
+  1: 1736527840
+  2: 767905456
+}
+3: "\'ve replaced `pnpm run lint-stage"
+4: 11
+
+
+Message 3:
+1: "bot-e179f538-0766-4ce2-8b54-27ea303102ea"
+2 {
+  1: 1736527840
+  2: 851550039
+}
+3: "d` with `npm run lint-staged` in"
+4: 13
+
+
+Message 4:
+1: "bot-e179f538-0766-4ce2-8b54-27ea303102ea"
+2 {
+  1: 1736527840
+  2: 935802823
+}
+3: " the pre-commit hook."
+4: 6
+
+
+Message 5:
+1: "bot-e179f538-0766-4ce2-8b54-27ea303102ea"
+2 {
+  1: 1736527840
+  2: 979974780
+}
+3: " The change has been made"
+4: 5
+
+
+Message 6:
+1: "bot-e179f538-0766-4ce2-8b54-27ea303102ea"
+2 {
+  1: 1736527841
+  2: 17525867
+}
+3: " successfully."
+4: 2
+
+
+Message 7:
+1: "bot-e179f538-0766-4ce2-8b54-27ea303102ea"
+2 {
+  1: 1736527841
+  2: 19729767
+}
+5: 4
+7 {
+  1: 166
+  2: 6
+  3: 38
+  4: 497
+  5: 6533
+}
+
+
+Message 8 (JSON):
+{}

@@ -1,0 +1,610 @@
+Response for: POST https://server.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146812
+  2: 927261695
+}
+3: "\n\nBase"
+4: 3
+
+
+Message 2:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146813
+  2: 63893065
+}
+3: "d on the code analysis, I can draw"
+4: 9
+
+
+Message 3:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146813
+  2: 278764615
+}
+3: " the main flow of the project using ASCII"
+4: 8
+
+
+Message 4:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146813
+  2: 495895495
+}
+3: " characters. Here\'s the architecture diagram:\n\n```\n                "
+4: 14
+
+
+Message 5:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146813
+  2: 751956985
+}
+3: "                  [Client/UI]\n                                      "
+4: 11
+
+
+Message 6:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146813
+  2: 887296835
+}
+3: "|\n                                      \342\206\223\n                            "
+4: 9
+
+
+Message 7:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146814
+  2: 60058325
+}
+3: "[FastAPI Agent Service]\n                                      "
+4: 11
+
+
+Message 8:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146814
+  2: 363063365
+}
+3: "|\n          +---------------------------|---------------------------+\n          "
+4: 13
+
+
+Message 9:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146814
+  2: 495634005
+}
+3: "\342\206\223                          \342\206\223                           \342\206\223"
+4: 7
+
+
+Message 10:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146814
+  2: 713521615
+}
+3: " \n   [Session Manager]          [Agent"
+4: 10
+
+
+Message 11:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146814
+  2: 845010725
+}
+3: " Handler]              [Inference API"
+4: 8
+
+
+Message 12:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146815
+  2: 145240735
+}
+3: "]\n   (create/close/get)     "
+4: 11
+
+
+Message 13:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146815
+  2: 233609945
+}
+3: "(process user requests)      (model"
+4: 8
+
+
+Message 14:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146815
+  2: 367585455
+}
+3: " interaction)\n          |                          |                "
+4: 9
+
+
+Message 15:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146815
+  2: 453334425
+}
+3: "           |\n          |                          |                           "
+4: 10
+
+
+Message 16:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146815
+  2: 670687625
+}
+3: "|\n    [AgentSession]            "
+4: 8
+
+
+Message 17:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146815
+  2: 890201015
+}
+3: "[CodeGeexAgentAPI]         "
+4: 8
+
+
+Message 18:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146816
+  2: 60780275
+}
+3: "[TGI Parameters]\n    (state"
+4: 11
+
+
+Message 19:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146816
+  2: 233690835
+}
+3: "/context)         (business"
+4: 7
+
+
+Message 20:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146816
+  2: 367016915
+}
+3: " logic/routing)    (model config"
+4: 9
+
+
+Message 21:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146816
+  2: 559875075
+}
+3: "/params)\n          |"
+4: 6
+
+
+Message 22:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146816
+  2: 562353965
+}
+3: "                          |                           |\n          +"
+4: 9
+
+
+Message 23:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146816
+  2: 626834595
+}
+3: "--------------------------|---------------------------+\n                "
+4: 8
+
+
+Message 24:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146816
+  2: 716080655
+}
+3: "                    \342\206\223\n                "
+4: 5
+
+
+Message 25:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146816
+  2: 845240325
+}
+3: "            [Language Model]\n                          "
+4: 8
+
+
+Message 26:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146817
+  2: 61850705
+}
+3: "(CodeGeeX/Response"
+4: 7
+
+
+Message 27:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146817
+  2: 148587235
+}
+3: ")\n```\n\nKey Components"
+4: 8
+
+
+Message 28:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146817
+  2: 281006985
+}
+3: " and Flow:\n\n1. **"
+4: 8
+
+
+Message 29:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146817
+  2: 367951825
+}
+3: "Client/UI**: Entry point for user interactions"
+4: 10
+
+
+Message 30:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146817
+  2: 496318845
+}
+3: "\n   - Sends requests to Agent"
+4: 8
+
+
+Message 31:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146817
+  2: 584267365
+}
+3: " Service\n   - Receives streaming"
+4: 7
+
+
+Message 32:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146817
+  2: 766699465
+}
+3: "/regular responses\n\n2. **FastAPI"
+4: 11
+
+
+Message 33:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146817
+  2: 975170265
+}
+3: " Agent Service** (`agent_service.py`):"
+4: 11
+
+
+Message 34:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146818
+  2: 105526075
+}
+3: "\n   - Handles HTTP endpoints"
+4: 8
+
+
+Message 35:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146818
+  2: 236501055
+}
+3: "\n   - Manages sessions"
+4: 6
+
+
+Message 36:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146818
+  2: 410087205
+}
+3: "\n   - Routes requests to appropriate handlers\n\n3. **"
+4: 14
+
+
+Message 37:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146818
+  2: 496546245
+}
+3: "Session Manager**:\n   - Creates"
+4: 9
+
+
+Message 38:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146818
+  2: 584618525
+}
+3: " new sessions\n   -"
+4: 5
+
+
+Message 39:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146818
+  2: 715178945
+}
+3: " Maintains session state\n   - Handles"
+4: 10
+
+
+Message 40:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146818
+  2: 804369015
+}
+3: " session cleanup\n\n4. **Agent"
+4: 9
+
+
+Message 41:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146818
+  2: 889903155
+}
+3: " Handler**:\n   - Processes user requests"
+4: 11
+
+
+Message 42:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146819
+  2: 20838845
+}
+3 {
+  1 {
+    4: 32
+    5: 0x6e614d20
+    12: 0x766e6f6320736567
+    12: 0x74617372
+    13: 0x0a776f6c66206e6f
+    4: 32
+  }
+  4: 45
+}
+4: 10
+
+
+Message 43:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146819
+  2: 237893315
+}
+3: " Formats messages for model\n\n5. **Inference"
+4: 12
+
+
+Message 44:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146819
+  2: 324708705
+}
+3: " API** (`inference.py`"
+4: 8
+
+
+Message 45:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146819
+  2: 415102335
+}
+3: "):\n   - Communic"
+4: 5
+
+
+Message 46:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146819
+  2: 498101815
+}
+3: "ates with language model\n   -"
+4: 7
+
+
+Message 47:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146819
+  2: 630148915
+}
+3: " Handles model parameters\n   - Processes responses"
+4: 10
+
+
+Message 48:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146819
+  2: 759734965
+}
+3: "\n\n6. **Language Model**:\n   -"
+4: 12
+
+
+Message 49:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146819
+  2: 893988965
+}
+3: " Generates responses\n   - Processes"
+4: 8
+
+
+Message 50:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146820
+  2: 63812065
+}
+3: " natural language\n   - Returns structure"
+4: 7
+
+
+Message 51:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146820
+  2: 194296975
+}
+3: "d outputs\n\nData Flow:\n```"
+4: 9
+
+
+Message 52:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146820
+  2: 455002445
+}
+3: "\nUser Request \342\206\222 Session Creation \342\206\222 Request"
+4: 9
+
+
+Message 53:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146820
+  2: 585538995
+}
+3: " Processing \342\206\222 Model Inference"
+4: 6
+
+
+Message 54:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146820
+  2: 788186035
+}
+3: " \342\206\222 Response Streaming \342\206\222 Client\n```\n\nThis"
+4: 11
+
+
+Message 55:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146820
+  2: 935364915
+}
+3: " architecture follows a service-oriented design with"
+4: 9
+
+
+Message 56:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146820
+  2: 975900605
+}
+3: " clear separation of concerns between"
+4: 5
+
+
+Message 57:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146821
+  2: 150462585
+}
+3: " session management, request handling, and model inference"
+4: 9
+
+
+Message 58:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146821
+  2: 246365545
+}
+3: "."
+4: 1
+
+
+Message 59:
+1: "bot-9ae0ed42-3748-48d4-b16c-b098a43e10f3"
+2 {
+  1: 1736146821
+  2: 249258475
+}
+5: 4
+7 {
+  1: 166
+  2: 5
+  3: 482
+  4: 578
+  5: 6947
+}
+
+
+Message 60 (JSON):
+{}

@@ -1,0 +1,366 @@
+Response for: POST https://server.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293323
+  2: 699122102
+}
+3: "\n\nI\'ve"
+4: 5
+
+
+Message 2:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293323
+  2: 865759442
+}
+3: " created a new script `decode_postman."
+4: 10
+
+
+Message 3:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293324
+  2: 37378132
+}
+3: "py` that will:\n\n1. Read a"
+4: 11
+
+
+Message 4:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293324
+  2: 131890451
+}
+3: " Postman collection JSON file\n2. Extract"
+4: 10
+
+
+Message 5:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293324
+  2: 258468461
+}
+3: " both requests and responses\n3."
+4: 7
+
+
+Message 6:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293324
+  2: 393264601
+}
+3: " Decode the base64-encoded protobuf messages\n4"
+4: 13
+
+
+Message 7:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293324
+  2: 522497210
+}
+3: ". Save decoded messages in separate"
+4: 7
+
+
+Message 8:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293324
+  2: 698986720
+}
+3: " files named with their request IDs"
+4: 6
+
+
+Message 9:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293324
+  2: 865957590
+}
+3: "\n5. Create a \'decoded_messages\'"
+4: 11
+
+
+Message 10:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293325
+  2: 80391849
+}
+3: " directory to store all outputs\n\nTo use the"
+4: 10
+
+
+Message 11:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293325
+  2: 175371779
+}
+3: " script:\n\n1. Save your"
+4: 8
+
+
+Message 12:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293325
+  2: 308299069
+}
+3: " Postman collection as a JSON file (like"
+4: 9
+
+
+Message 13:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293325
+  2: 472875608
+}
+3: " the one in your screenshot)\n2. Run"
+4: 10
+
+
+Message 14:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293325
+  2: 570397888
+}
+3: " the script with:\n```"
+4: 6
+
+
+Message 15:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293325
+  2: 664372268
+}
+3: "bash\npython decode_postman.py path"
+4: 10
+
+
+Message 16:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293325
+  2: 736019658
+}
+3: "/to/your/collection"
+4: 6
+
+
+Message 17:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293325
+  2: 866985887
+}
+3: ".json\n```\n\nThe script will:"
+4: 10
+
+
+Message 18:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293325
+  2: 937688837
+}
+3: "\n- Create a `decoded_messages` directory"
+4: 11
+
+
+Message 19:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293326
+  2: 54641577
+}
+3: " in the same location as your JSON file\n- Save"
+4: 11
+
+
+Message 20:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293326
+  2: 229529216
+}
+3: " request files as `req_["
+4: 7
+
+
+Message 21:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293326
+  2: 329021876
+}
+3 {
+  9: 0x646f6365642e5d44
+  12: 0x28206064
+}
+4: 6
+
+
+Message 22:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293326
+  2: 354063526
+}
+3 {
+  12: 0x2c2e672e
+  4: 96
+}
+4: 5
+
+
+Message 23:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293326
+  2: 502038246
+}
+3: "req_49.decoded`)\n-"
+4: 10
+
+
+Message 24:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293326
+  2: 580818616
+}
+3: " Save response files as `res_[ID]."
+4: 10
+
+
+Message 25:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293326
+  2: 659462175
+}
+3: "decoded` (e.g., `res_"
+4: 11
+
+
+Message 26:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293326
+  2: 789063685
+}
+3: "49.decoded`)\n- Include the original"
+4: 12
+
+
+Message 27:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293326
+  2: 865822085
+}
+3: " request/response name in each"
+4: 6
+
+
+Message 28:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293327
+  2: 17708864
+}
+3: " file\n- Handle both g"
+4: 6
+
+
+Message 29:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293327
+  2: 94055754
+}
+3: "zipped and uncompresse"
+4: 7
+
+
+Message 30:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293327
+  2: 306410424
+}
+3: "d messages\n- Handle both prot"
+4: 7
+
+
+Message 31:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293327
+  2: 432578553
+}
+3: "obuf and JSON payloads\n\nLet"
+4: 9
+
+
+Message 32:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293327
+  2: 650651423
+}
+3: "\'s try running it with your JSON file."
+4: 10
+
+
+Message 33:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293327
+  2: 826712603
+}
+3: " What\'s the path to your Postman"
+4: 9
+
+
+Message 34:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293327
+  2: 882520592
+}
+3: " collection JSON file?"
+4: 4
+
+
+Message 35:
+1: "bot-62f2699d-93af-4822-b6fe-c1b79f8442dd"
+2 {
+  1: 1734293327
+  2: 887699212
+}
+5: 4
+7 {
+  1: 166
+  2: 4
+  3: 277
+  4: 1965
+  5: 36347
+}
+
+
+Message 36 (JSON):
+{}

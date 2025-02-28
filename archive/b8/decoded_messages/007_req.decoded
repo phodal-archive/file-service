@@ -1,0 +1,69 @@
+Request: POST https://inference.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1 {
+  1: "windsurf"
+  2: "1.30.2"
+  3: "93959356-95cb-4429-b266-d2e0b58bae34"
+  4: "en"
+  5: "{\"Os\":\"darwin\",\"Arch\":\"arm64\",\"Release\":\"24.2.0\",\"Version\":\"Darwin Kernel Version 24.2.0: Fri Nov 15 19:23:35 PST 2024; root:xnu-11215.61.3~1/RELEASE_ARM64_T6020\",\"Machine\":\"arm64\",\"Nodename\":\"Jays-MacBook-Pro.local\",\"Sysname\":\"Darwin\",\"ProductVersion\":\"15.2\"}"
+  7: "11.0.0"
+  8: "{\"NumSockets\":1,\"NumCores\":10,\"NumThreads\":10,\"VendorID\":\"\",\"Family\":\"0\",\"Model\":\"0\",\"ModelName\":\"Apple M2 Pro\",\"Memory\":17179869184}"
+  12: "windsurf"
+  21: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdHRyaWJ1dGlvbl9lbmFibGVkIjpmYWxzZSwiYXV0aF91aWQiOiJrcVBBeDE3MVQ5WVhWcFpRa1dxY1NJRGVTUFgyIiwiZGlzYWJsZV9jb2RlaXVtIjpmYWxzZSwiZGlzYWJsZWRfY29kZV9zbmlwcGV0X3RlbGVtZXRyeSI6dHJ1ZSwiZW1haWwiOiJjaGVzc2pvZUBvdXRsb29rLmNvbSIsImV4cCI6MTczNDU0MTIwMSwiZ3JvdXBfaWRzIjpbXSwiaWdub3JlX2NoYXRfdGVsZW1ldHJ5X3NldHRpbmciOnRydWUsIm5hbWUiOiJXcm9rIE92ZXJsZm93IiwicGxhbl9pbmZvIjoie1widGVhbXNUaWVyXCI6XCJURUFNU19USUVSX1RFQU1TXCIsXCJwbGFuTmFtZVwiOlwiVGVhbXNcIixcImhhc0F1dG9jb21wbGV0ZUZhc3RNb2RlXCI6dHJ1ZSxcImFsbG93U3RpY2t5UHJlbWl1bU1vZGVsc1wiOnRydWUsXCJoYXNGb3JnZUFjY2Vzc1wiOnRydWUsXCJkaXNhYmxlQ29kZVNuaXBwZXRUZWxlbWV0cnlcIjp0cnVlLFwiYWxsb3dQcmVtaXVtQ29tbWFuZE1vZGVsc1wiOnRydWUsXCJtYXhOdW1QcmVtaXVtQ2hhdE1lc3NhZ2VzXCI6XCItMVwiLFwibWF4TnVtQ2hhdElucHV0VG9rZW5zXCI6XCIxNjM4NFwiLFwibWF4Q3VzdG9tQ2hhdEluc3RydWN0aW9uQ2hhcmFjdGVyc1wiOlwiNjAwXCIsXCJtYXhOdW1QaW5uZWRDb250ZXh0SXRlbXNcIjpcIi0xXCIsXCJtYXhMb2NhbEluZGV4U2l6ZVwiOlwiLTFcIixcIm1vbnRobHlQcm9tcHRDcmVkaXRzXCI6MzAwMDAsXCJtb250aGx5Rmxvd0NyZWRpdHNcIjoxMjAwMDAsXCJtb250aGx5RmxleENyZWRpdFB1cmNoYXNlQW1vdW50XCI6MzAwMDAwLFwiaXNUZWFtc1wiOnRydWUsXCJjYW5CdXlNb3JlQ3JlZGl0c1wiOnRydWV9IiwicHJvIjp0cnVlLCJ0ZWFtX2lkIjoiZjljYzUzYWMtYzc1Zi00YmE1LTk2MDktYTdhNWY0Nzg5MmIwIiwidGVhbV9zdGF0dXMiOiJVU0VSX1RFQU1fU1RBVFVTX0FQUFJPVkVEIiwidGVhbXNfZmVhdHVyZXMiOltdLCJ1c2VyX2ZlYXR1cmVzIjpbXX0.hw_Bm8ST6YomCdJkBeOvZzoRrIUecGnCI5s-ntbWsko"
+}
+2: "You are an expert AI coding assistant and are pair programming with a USER to solve a coding task.\nYou provide clear, detailed, and accurate summaries of conversations. When asked, you focus on outlining the USER\'s main goals\nand listing key information and context discussed. Your response should be well-organized and reflect the essence of the dialog.\nNEVER lie or make things up. Your summaries should always be grounded in the conversation."
+3 {
+  2: 1
+  3: "search all code  about large language model\nThe current local time is: 2024-12-19T00:00:18+08:00. This is the latest source of truth for time; do not attempt to get the time any other way.\n\nThe user\'s current state is as follows:\nActive Document: file:///Users/admin/Codespaces/github/mcp-cli/src/mcpcli/chat_handler.py (LANGUAGE_PYTHON)\nCursor is on line: 108\nActive Code Item: process_conversation"
+  4: 143
+  5: 1
+}
+3 {
+  2: 2
+  3: "I\'ll search through the codebase for code related to large language models. Let me use the semantic search to find relevant code snippets."
+  4: 34
+}
+3 {
+  2: 2
+  4: 97
+  5: 1
+  6 {
+    1: "toolu_01XRGKStUCunC1sFsjPgDUf2"
+    2: "codebase_search"
+    3: "{\"Query\": \"code related to large language model, LLM, or language model implementation\", \"TargetDirectories\": [\"/Users/admin/Codespaces/github/mcp-cli\"]}"
+  }
+}
+3 {
+  2: 4
+  3: "Step is still running"
+  4: 9
+  7: "toolu_01XRGKStUCunC1sFsjPgDUf2"
+}
+3 {
+  2: 1
+  3: "Summarize the file changes made during the chat conversation. Your output should be formatted as follows:\n\n\t<edited_file>Filename 1</edited_file>: Summary of edits in File1\n\t<edited_file>Filename 2</edited_file>: Summary of edits in File2\n\t...\n\n\tDo not include any other text in your summary. If you encounter conflicting diffs, you should prioritize the most recent diff.\n\t"
+}
+6: 113
+7: 5
+8 {
+  1: 1
+  2: 8192
+  3: 200
+  5: 0x3fd999999999999a
+  6: 0x3fd999999999999a
+  7: 50
+  8: 0x3ff0000000000000
+  9: "<|user|>"
+  9: "<|bot|>"
+  9: "<|context_request|>"
+  9: "<|endoftext|>"
+  9: "<|end_of_turn|>"
+  11: 0x3ff0000000000000
+}
+10 {
+  1: "do_not_call"
+  2: "Do not call this tool."
+  3: "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"properties\":{},\"additionalProperties\":false,\"type\":\"object\"}"
+}
+

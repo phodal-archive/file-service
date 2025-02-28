@@ -1,0 +1,321 @@
+Response for: POST https://server.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334853
+  2: 561434378
+}
+3: "\n\nI"
+4: 3
+
+
+Message 2:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334853
+  2: 943095719
+}
+3: " notice you have several files open,"
+4: 7
+
+
+Message 3:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334853
+  2: 981664376
+}
+3: " including `extract_tools.sh` and `"
+4: 10
+
+
+Message 4:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334854
+  2: 468202348
+}
+3: "process_tools.py`, which seem to"
+4: 9
+
+
+Message 5:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334854
+  2: 762229356
+}
+3: " be key files in this project. Let me"
+4: 9
+
+
+Message 6:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334854
+  2: 851179069
+}
+3: " take a look at the content of `"
+4: 8
+
+
+Message 7:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334854
+  2: 945898232
+}
+3: "process_tools.py` since it appears"
+4: 9
+
+
+Message 8:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 41863814
+}
+3: " to be one of the main Python files:"
+4: 9
+
+
+Message 9:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 223449550
+}
+6 {
+  1: "toolu_01WXf43uxEm5pS5uidR631UF"
+  2: "view_file"
+}
+
+
+Message 10:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 223743540
+}
+6: ""
+
+
+Message 11:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 800448226
+}
+6 {
+  3: "{\"Absolu"
+}
+
+
+Message 12:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 800938546
+}
+6 {
+  3: "teP"
+}
+
+
+Message 13:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 802050766
+}
+6 {
+  3: "at"
+}
+
+
+Message 14:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 802636246
+}
+6 {
+  3 {
+    13: 34
+  }
+}
+
+
+Message 15:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 803174616
+}
+6 {
+  3: ": \"/Us"
+}
+
+
+Message 16:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 803306636
+}
+6 {
+  3: "ers/admi"
+}
+
+
+Message 17:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 803954426
+}
+6 {
+  3: "n/C"
+}
+
+
+Message 18:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 804504716
+}
+6 {
+  3: "odespaces"
+}
+
+
+Message 19:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 804677296
+}
+6 {
+  3: "/gi"
+}
+
+
+Message 20:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 804746586
+}
+6 {
+  3: "thub/mcp-cli"
+}
+
+
+Message 21:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 804781586
+}
+6 {
+  3: "/proc"
+}
+
+
+Message 22:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 804913466
+}
+6 {
+  3: "ess_"
+}
+
+
+Message 23:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334855
+  2: 805185726
+}
+6 {
+  3: "tools.py\""
+}
+
+
+Message 24:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334856
+  2: 80244185
+}
+6 {
+  3: ", \"StartLi"
+}
+
+
+Message 25:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334856
+  2: 80307265
+}
+6 {
+  3: "ne\": 0"
+}
+
+
+Message 26:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334856
+  2: 125714761
+}
+6 {
+  3: ", \"EndLine\""
+}
+
+
+Message 27:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334856
+  2: 125945251
+}
+6 {
+  3: ": "
+}
+
+
+Message 28:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334856
+  2: 126150531
+}
+6 {
+  3: "50}"
+}
+
+
+Message 29:
+1: "bot-219fb3b7-06df-491e-b252-cd19be3d9e34"
+2 {
+  1: 1734334856
+  2: 126786091
+}
+5: 10
+7 {
+  1: 166
+  2: 5
+  3: 177
+  4: 492
+  5: 6250
+}
+
+
+Message 30 (JSON):
+{}

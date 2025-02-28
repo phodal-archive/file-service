@@ -1,0 +1,119 @@
+Response for: POST https://server.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1: "bot-44ad960a-af8a-487d-94b9-da095d0f7ebb"
+2 {
+  1: 1736526369
+  2: 302056661
+}
+3: "\n\nI apologize,"
+4: 6
+
+
+Message 2:
+1: "bot-44ad960a-af8a-487d-94b9-da095d0f7ebb"
+2 {
+  1: 1736526369
+  2: 359973446
+}
+3: " but it seems there are unsaved changes in the"
+4: 10
+
+
+Message 3:
+1: "bot-44ad960a-af8a-487d-94b9-da095d0f7ebb"
+2 {
+  1: 1736526369
+  2: 555480701
+}
+3: " file that need to be saved first. Coul"
+4: 10
+
+
+Message 4:
+1: "bot-44ad960a-af8a-487d-94b9-da095d0f7ebb"
+2 {
+  1: 1736526369
+  2: 658072434
+}
+3: "d you please save any changes you have"
+4: 8
+
+
+Message 5:
+1: "bot-44ad960a-af8a-487d-94b9-da095d0f7ebb"
+2 {
+  1: 1736526369
+  2: 788779094
+}
+3: " in the file? Once you\'ve done that"
+4: 10
+
+
+Message 6:
+1: "bot-44ad960a-af8a-487d-94b9-da095d0f7ebb"
+2 {
+  1: 1736526369
+  2: 952674461
+}
+3: ", I can help you replace `pnpm`"
+4: 10
+
+
+Message 7:
+1: "bot-44ad960a-af8a-487d-94b9-da095d0f7ebb"
+2 {
+  1: 1736526370
+  2: 38732124
+}
+3: " with `npm` in the pre-commit hook"
+4: 10
+
+
+Message 8:
+1: "bot-44ad960a-af8a-487d-94b9-da095d0f7ebb"
+2 {
+  1: 1736526370
+  2: 128449028
+}
+3: ".\n\nLet me know when you\'ve"
+4: 10
+
+
+Message 9:
+1: "bot-44ad960a-af8a-487d-94b9-da095d0f7ebb"
+2 {
+  1: 1736526370
+  2: 217215491
+}
+3: " saved the file, and I\'ll make"
+4: 9
+
+
+Message 10:
+1: "bot-44ad960a-af8a-487d-94b9-da095d0f7ebb"
+2 {
+  1: 1736526370
+  2: 333044602
+}
+3: " the change for you."
+4: 5
+
+
+Message 11:
+1: "bot-44ad960a-af8a-487d-94b9-da095d0f7ebb"
+2 {
+  1: 1736526370
+  2: 338424742
+}
+5: 4
+7 {
+  1: 166
+  2: 233
+  3: 85
+  5: 6505
+}
+
+
+Message 12 (JSON):
+{}

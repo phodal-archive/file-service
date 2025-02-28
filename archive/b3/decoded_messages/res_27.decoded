@@ -1,0 +1,321 @@
+Response for: POST https://server.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292207
+  2: 682046
+}
+3: "I see"
+4: 2
+
+
+Message 2:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292207
+  2: 388544336
+}
+3: " you\'re getting a Unicode decoding error when"
+4: 10
+
+
+Message 3:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292207
+  2: 443133486
+}
+3: " trying to decode the gRPC message"
+4: 8
+
+
+Message 4:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292207
+  2: 647315756
+}
+3: ". This suggests the content might not be UTF"
+4: 9
+
+
+Message 5:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292207
+  2: 766970646
+}
+3: "-8 encoded. Let me help"
+4: 7
+
+
+Message 6:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292207
+  2: 880321476
+}
+3: " you modify the code to handle different encodings and binary"
+4: 12
+
+
+Message 7:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292207
+  2: 957995716
+}
+3: " data more robustly."
+4: 5
+
+
+Message 8:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 153243826
+}
+3: "\n\nLet me check the current content of the file first"
+4: 12
+
+
+Message 9:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 234763696
+}
+3: ":"
+4: 1
+
+
+Message 10:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 561712296
+}
+6 {
+  1: "toolu_01XA8n496X6GTNFmxQuZUJzu"
+  2: "view_file"
+}
+
+
+Message 11:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 561790356
+}
+6: ""
+
+
+Message 12:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 985464306
+}
+6 {
+  3: "{\"Absolute"
+}
+
+
+Message 13:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 985899706
+}
+6 {
+  3: "Path\": "
+}
+
+
+Message 14:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 989282206
+}
+6 {
+  3: "\"/U"
+}
+
+
+Message 15:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 989373966
+}
+6 {
+  3: "sers/"
+}
+
+
+Message 16:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 989451016
+}
+6 {
+  3: "admin/"
+}
+
+
+Message 17:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 989530346
+}
+6 {
+  3: "Co"
+}
+
+
+Message 18:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 989602416
+}
+6 {
+  3: "despac"
+}
+
+
+Message 19:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 989690156
+}
+6 {
+  3: "es/github"
+}
+
+
+Message 20:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 989747256
+}
+6 {
+  3: "/mcp-c"
+}
+
+
+Message 21:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 989807946
+}
+6 {
+  3: "li/temp/3.p"
+}
+
+
+Message 22:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292208
+  2: 989880776
+}
+6 {
+  3: "y\""
+}
+
+
+Message 23:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292209
+  2: 439203346
+}
+6 {
+  3: ", \"Star"
+}
+
+
+Message 24:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292209
+  2: 439281566
+}
+6 {
+  3: "tLine\":"
+}
+
+
+Message 25:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292209
+  2: 439341066
+}
+6 {
+  3 {
+    4: 48
+  }
+}
+
+
+Message 26:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292209
+  2: 440344036
+}
+6 {
+  3: ", \""
+}
+
+
+Message 27:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292209
+  2: 440395796
+}
+6 {
+  3: "EndL"
+}
+
+
+Message 28:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292209
+  2: 440735866
+}
+6 {
+  3 {
+    13: 0x7d3536203a22656e
+  }
+}
+
+
+Message 29:
+1: "bot-da5ddc72-36b0-4345-8d61-5118e5f1cbaa"
+2 {
+  1: 1734292209
+  2: 442043206
+}
+5: 10
+7 {
+  1: 166
+  2: 3
+  3: 179
+  4: 8404
+}
+
+
+Message 30 (JSON):
+{}

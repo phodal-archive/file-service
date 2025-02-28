@@ -1,0 +1,70 @@
+Request: POST https://inference.codeium.com/exa.api_server_pb.ApiServerService/GetStreamingCompletions
+================================================================================
+Message 1:
+1 {
+  1: "windsurf"
+  2: "1.30.6"
+  3: "93959356-95cb-4429-b266-d2e0b58bae34"
+  4: "en"
+  5: "{\"Os\":\"darwin\",\"Arch\":\"arm64\",\"Release\":\"24.2.0\",\"Version\":\"Darwin Kernel Version 24.2.0: Fri Nov 15 19:23:35 PST 2024; root:xnu-11215.61.3~1/RELEASE_ARM64_T6020\",\"Machine\":\"arm64\",\"Nodename\":\"Jays-MacBook-Pro.local\",\"Sysname\":\"Darwin\",\"ProductVersion\":\"15.2\"}"
+  7: "11.0.0"
+  8: "{\"NumSockets\":1,\"NumCores\":10,\"NumThreads\":10,\"VendorID\":\"\",\"Family\":\"0\",\"Model\":\"0\",\"ModelName\":\"Apple M2 Pro\",\"Memory\":17179869184}"
+  12: "windsurf"
+  16 {
+    1: 1736527836
+    2: 563049000
+  }
+  21: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdHRyaWJ1dGlvbl9lbmFibGVkIjpmYWxzZSwiYXV0aF91aWQiOiJrcVBBeDE3MVQ5WVhWcFpRa1dxY1NJRGVTUFgyIiwiZGlzYWJsZV9jb2RlaXVtIjpmYWxzZSwiZGlzYWJsZWRfY29kZV9zbmlwcGV0X3RlbGVtZXRyeSI6ZmFsc2UsImVtYWlsIjoiY2hlc3Nqb2VAb3V0bG9vay5jb20iLCJleHAiOjE3MzY1MzEzODAsImdyb3VwX2lkcyI6W10sImlnbm9yZV9jaGF0X3RlbGVtZXRyeV9zZXR0aW5nIjp0cnVlLCJuYW1lIjoiV3JvayBPdmVybGZvdyIsInBsYW5faW5mbyI6IntcInRlYW1zVGllclwiOlwiVEVBTVNfVElFUl9QUk9cIixcInBsYW5OYW1lXCI6XCJQcm9cIixcImhhc0F1dG9jb21wbGV0ZUZhc3RNb2RlXCI6dHJ1ZSxcImFsbG93U3RpY2t5UHJlbWl1bU1vZGVsc1wiOnRydWUsXCJhbGxvd1ByZW1pdW1Db21tYW5kTW9kZWxzXCI6dHJ1ZSxcIm1heE51bVByZW1pdW1DaGF0TWVzc2FnZXNcIjpcIi0xXCIsXCJtYXhOdW1DaGF0SW5wdXRUb2tlbnNcIjpcIjE2Mzg0XCIsXCJtYXhDdXN0b21DaGF0SW5zdHJ1Y3Rpb25DaGFyYWN0ZXJzXCI6XCI2MDBcIixcIm1heE51bVBpbm5lZENvbnRleHRJdGVtc1wiOlwiLTFcIixcIm1heExvY2FsSW5kZXhTaXplXCI6XCItMVwiLFwibW9udGhseVByb21wdENyZWRpdHNcIjo1MDAwMCxcIm1vbnRobHlGbG93Q3JlZGl0c1wiOjE1MDAwMCxcIm1vbnRobHlGbGV4Q3JlZGl0UHVyY2hhc2VBbW91bnRcIjozMDAwMCxcImNhbkJ1eU1vcmVDcmVkaXRzXCI6dHJ1ZSxcImNhc2NhZGVXZWJTZWFyY2hFbmFibGVkXCI6dHJ1ZX0iLCJwcm8iOnRydWUsInRlYW1faWQiOiJmOWNjNTNhYy1jNzVmLTRiYTUtOTYwOS1hN2E1ZjQ3ODkyYjAiLCJ0ZWFtX3N0YXR1cyI6IlVTRVJfVEVBTV9TVEFUVVNfQVBQUk9WRUQiLCJ0ZWFtc19mZWF0dXJlcyI6W10sInVzZXJfZmVhdHVyZXMiOltdfQ.EgA5aqSFQiZrmMOGNobe1t10Y-qJAVvYojjpr118at0"
+}
+2 {
+  1 {
+    1: 1
+    2: 60000
+    5: 0x3fb999999999999a
+    7: 50
+    8: 0x3ff0000000000000
+    9: "<|user|>"
+    9: "<|bot|>"
+    9: "<|context_request|>"
+    9: "<|endoftext|>"
+    9: "<|end_of_turn|>"
+    11: 0x3ff0000000000000
+    12: 1
+    13: 1
+    14: 1
+  }
+  2: "<|startoftext|><|start_header|>system<|end_header|>\n\nYou are a helpful assistant whose purpose is to help a user edit a code document. You will be given the full contents of the code document as well as the change that the user wants to make. Your task will be to make the change and return the full contents of the new code document after the change.\n\nPlease make the change faithfully and without making any unrelated edits. Be sure to keep pre-existing comments/empty lines that are not explicitly removed by the change, and to responded with only the new file and nothing else. Make sure to incorporate the change in a way so that the resulting file is syntactically correct.\n\nFormat your new code using markdown with three backticks. Only include the markdown code block in your response.\n\nThe code document that the user wants to edit is located at .husky/pre-commit.zh.\n\nRemember that you must return the full contents of the file after making the change.<|end_of_turn|><|start_header|>user<|end_header|>\n\nMy code document has the following content:\n\n```\n#!/usr/bin/env sh\n# \345\212\240\350\275\275 husky \350\204\232\346\234\254\n. \"$(dirname -- \"$0\")/_/husky.sh\"\n\n# \350\277\220\350\241\214\344\273\243\347\240\201\351\243\216\346\240\274\346\243\200\346\237\245\nThis is line 1\n\n# \350\277\220\350\241\214\344\273\243\347\240\201\351\243\216\346\240\274\346\243\200\346\237\245\nThis is line 2\n\n# \350\277\220\350\241\214\344\273\243\347\240\201\351\243\216\346\240\274\346\243\200\346\237\245\npnpm run lint-staged\n```\n\nFollow these instructions to make the following change to my code document.\n\nInstruction: Replacing \'pnpm run lint-staged\' with \'npm run lint-staged\'\n\nCode Edit:\n```\n{{ ... }}\nnpm run lint-staged\n{{ ... }}\n```<|end_of_turn|><|start_header|>assistant<|end_header|>"
+  3: "Shell"
+  4: 40
+  5: "file:///Users/admin/Codespaces/askman-dev/askman-chrome-extension/.husky/pre-commit.zh"
+  6: ".husky/pre-commit.zh"
+  7: "{\"CONTEXT_ACTIVE_DOCUMENT_FRACTION\":true,\"CONTEXT_COMMAND_TRAJECTORY_PROMPT_CONFIG\":false,\"KNOWLEDGE_BASE_PROMPT_FRACTION\":false,\"ONLY_STOP_EOT\":false,\"SINGLE_COMPLETION\":false,\"SUPERCOMPLETE_NO_CONTEXT\":false,\"USE_IMPLICIT_TRAJECTORY\":true,\"USE_SPECIAL_EDIT_CODE_BLOCK\":false}"
+  10: 116
+  12 {
+    1: "context_refresh"
+  }
+  12 {
+    1: "get_annotation_ranges"
+  }
+  13: "file:///Users/admin/Codespaces/askman-dev/askman-chrome-extension"
+  14: 1
+  16 {
+    1: "askman-dev/askman-chrome-extension"
+    2: "git@github.com:askman-dev/askman-chrome-extension.git"
+  }
+  19: "{\"CONTEXT_ACTIVE_DOCUMENT_FRACTION\":{\"Name\":\"CONTEXT_ACTIVE_DOCUMENT_FRACTION\",\"PayloadType\":\"string\",\"Payload\":\"0.4\"}}"
+  23 {
+    1: 1
+    2: 1062
+    3: 1270
+  }
+  23 {
+    1: 1
+    2: 1353
+    3: 1485
+  }
+  24: 1
+}
+4: 9
+8: "7968fd30-f2dc-4fb7-a6b4-35f34782b810"
+

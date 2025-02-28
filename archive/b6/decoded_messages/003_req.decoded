@@ -1,0 +1,70 @@
+Request: POST https://inference.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1 {
+  1: "windsurf"
+  2: "1.30.2"
+  3: "93959356-95cb-4429-b266-d2e0b58bae34"
+  4: "en"
+  5: "{\"Os\":\"darwin\",\"Arch\":\"arm64\",\"Release\":\"24.2.0\",\"Version\":\"Darwin Kernel Version 24.2.0: Fri Nov 15 19:23:35 PST 2024; root:xnu-11215.61.3~1/RELEASE_ARM64_T6020\",\"Machine\":\"arm64\",\"Nodename\":\"Jays-MacBook-Pro.local\",\"Sysname\":\"Darwin\",\"ProductVersion\":\"15.2\"}"
+  7: "11.0.0"
+  8: "{\"NumSockets\":1,\"NumCores\":10,\"NumThreads\":10,\"VendorID\":\"\",\"Family\":\"0\",\"Model\":\"0\",\"ModelName\":\"Apple M2 Pro\",\"Memory\":17179869184}"
+  12: "windsurf"
+  21: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdHRyaWJ1dGlvbl9lbmFibGVkIjpmYWxzZSwiYXV0aF91aWQiOiJrcVBBeDE3MVQ5WVhWcFpRa1dxY1NJRGVTUFgyIiwiZGlzYWJsZV9jb2RlaXVtIjpmYWxzZSwiZGlzYWJsZWRfY29kZV9zbmlwcGV0X3RlbGVtZXRyeSI6dHJ1ZSwiZW1haWwiOiJjaGVzc2pvZUBvdXRsb29rLmNvbSIsImV4cCI6MTczNDMzODQ0NywiZ3JvdXBfaWRzIjpbXSwiaWdub3JlX2NoYXRfdGVsZW1ldHJ5X3NldHRpbmciOnRydWUsIm5hbWUiOiJXcm9rIE92ZXJsZm93IiwicGxhbl9pbmZvIjoie1widGVhbXNUaWVyXCI6XCJURUFNU19USUVSX1RFQU1TXCIsXCJwbGFuTmFtZVwiOlwiVGVhbXNcIixcImhhc0F1dG9jb21wbGV0ZUZhc3RNb2RlXCI6dHJ1ZSxcImFsbG93U3RpY2t5UHJlbWl1bU1vZGVsc1wiOnRydWUsXCJoYXNGb3JnZUFjY2Vzc1wiOnRydWUsXCJkaXNhYmxlQ29kZVNuaXBwZXRUZWxlbWV0cnlcIjp0cnVlLFwiYWxsb3dQcmVtaXVtQ29tbWFuZE1vZGVsc1wiOnRydWUsXCJtYXhOdW1QcmVtaXVtQ2hhdE1lc3NhZ2VzXCI6XCItMVwiLFwibWF4TnVtQ2hhdElucHV0VG9rZW5zXCI6XCIxNjM4NFwiLFwibWF4Q3VzdG9tQ2hhdEluc3RydWN0aW9uQ2hhcmFjdGVyc1wiOlwiNjAwXCIsXCJtYXhOdW1QaW5uZWRDb250ZXh0SXRlbXNcIjpcIi0xXCIsXCJtYXhMb2NhbEluZGV4U2l6ZVwiOlwiLTFcIixcIm1vbnRobHlQcm9tcHRDcmVkaXRzXCI6MzAwMDAsXCJtb250aGx5Rmxvd0NyZWRpdHNcIjoxMjAwMDAsXCJtb250aGx5RmxleENyZWRpdFB1cmNoYXNlQW1vdW50XCI6MzAwMDAwLFwiaXNUZWFtc1wiOnRydWUsXCJjYW5CdXlNb3JlQ3JlZGl0c1wiOnRydWV9IiwicHJvIjp0cnVlLCJ0ZWFtX2lkIjoiZjljYzUzYWMtYzc1Zi00YmE1LTk2MDktYTdhNWY0Nzg5MmIwIiwidGVhbV9zdGF0dXMiOiJVU0VSX1RFQU1fU1RBVFVTX0FQUFJPVkVEIiwidGVhbXNfZmVhdHVyZXMiOltdLCJ1c2VyX2ZlYXR1cmVzIjpbXX0._V_Xqo3XJNsAtpolsyVL4khCFCMsw_pRwZTrN7bEa2I"
+}
+2: "You are an expert AI coding assistant and are pair programming with a USER to solve a coding task.\nYou provide clear, detailed, and accurate summaries of conversations. When asked, you focus on outlining the USER\'s main goals\nand listing key information and context discussed. Your response should be well-organized and reflect the essence of the dialog.\nNEVER lie or make things up. Your summaries should always be grounded in the conversation."
+3 {
+  2: 1
+  3: "THIS IS INPUT QUERY\nThe current local time is: 2024-12-16T15:40:43+08:00. This is the latest source of truth for time; do not attempt to get the time any other way.\n\nThe user\'s current state is as follows:\nActive Document: file:///Users/admin/Codespaces/github/mcp-cli/temp/b4/decoded_messages/050_req.decoded (LANGUAGE_UNSPECIFIED)\nCursor is on line: 63\nOther open documents:\n- file:///Users/admin/Codespaces/github/mcp-cli/temp/b4/decoded_messages/028_req.decoded (LANGUAGE_UNSPECIFIED)\n- file:///Users/admin/Codespaces/github/mcp-cli/extract_tools.sh (LANGUAGE_SHELL)\n- file:///Users/admin/Codespaces/github/mcp-cli/process_tools.py (LANGUAGE_PYTHON)\n- file:///Users/admin/Codespaces/github/mcp-cli/temp/b4/decoded_messages/044_req.decoded (LANGUAGE_UNSPECIFIED)"
+  4: 319
+  5: 1
+}
+3 {
+  2: 2
+  3: "I\'ll help you explore the codebase. Let me first check what\'s in the workspace to understand the context better."
+  4: 32
+}
+3 {
+  2: 2
+  4: 75
+  5: 1
+  6 {
+    1: "toolu_0121Y4sAMoeQ53L6kUTKYQtL"
+    2: "list_dir"
+    3: "{\"DirectoryPath\": \"/Users/admin/Codespaces/github/mcp-cli\"}"
+  }
+}
+3 {
+  2: 4
+  3: "{\"name\":\".DS_Store\",\"size_bytes\":6148}\n{\"name\":\".conda\",\"is_dir\":true}\n{\"name\":\".env\",\"size_bytes\":508}\n{\"name\":\".env.example\",\"size_bytes\":20}\n{\"name\":\".git\",\"is_dir\":true}\n{\"name\":\".gitignore\",\"size_bytes\":60}\n{\"name\":\".pdm-build\",\"is_dir\":true}\n{\"name\":\".python-version\",\"size_bytes\":5}\n{\"name\":\".venv\",\"is_dir\":true}\n{\"name\":\".vscode\",\"is_dir\":true}\n{\"name\":\"1.1\",\"size_bytes\":2515}\n{\"name\":\"1.log\",\"size_bytes\":2515}\n{\"name\":\"README.md\",\"size_bytes\":2990}\n{\"name\":\"extract_tools.sh\",\"size_bytes\":188}\n{\"name\":\"license.md\",\"size_bytes\":1077}\n{\"name\":\"process_tools.py\",\"size_bytes\":7602}\n{\"name\":\"pyproject.toml\",\"size_bytes\":692}\n{\"name\":\"sample_messages\",\"is_dir\":true,\"num_children\":2}\n{\"name\":\"scripts\",\"is_dir\":true,\"num_children\":1}\n{\"name\":\"server_config.json\",\"size_bytes\":132}\n{\"name\":\"src\",\"is_dir\":true,\"num_children\":22}\n{\"name\":\"start.sh\",\"size_bytes\":451}\n{\"name\":\"temp\",\"is_dir\":true,\"num_children\":256}\n{\"name\":\"test.db\",\"size_bytes\":8192}\n{\"name\":\"uv.lock\",\"size_bytes\":41177}"
+  4: 424
+  5: 1
+  7: "toolu_0121Y4sAMoeQ53L6kUTKYQtL"
+}
+3 {
+  2: 1
+  3: "Generate a short conversation title around 3-5 words describing the USER\'s intent and goals during this chat. Should be title-cased, e.g \'Developing a Chess App\'. Format as a simple string, not as markdown; and please output the title directly, do not prefix it with \"Title:\" or anything similar.\n\tThen in a new line, write a single sentence summarizing the same thing,.\n\tPhrase the sentence in the past continuous tense, and speak as if you were describing the USER\'s intent to the USER themselves.\n\tUse \"you were\" or \"we were\" instead of \"I was\""
+}
+6: 113
+7: 5
+8 {
+  1: 1
+  2: 8192
+  3: 200
+  5: 0x3fd999999999999a
+  6: 0x3fd999999999999a
+  7: 50
+  8: 0x3ff0000000000000
+  9: "<|user|>"
+  9: "<|bot|>"
+  9: "<|context_request|>"
+  9: "<|endoftext|>"
+  9: "<|end_of_turn|>"
+  11: 0x3ff0000000000000
+}
+10 {
+  1: "do_not_call"
+  2: "Do not call this tool."
+  3: "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"properties\":{},\"additionalProperties\":false,\"type\":\"object\"}"
+}
+

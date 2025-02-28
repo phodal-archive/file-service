@@ -1,0 +1,70 @@
+Request: POST https://inference.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1 {
+  1: "windsurf"
+  2: "1.30.6"
+  3: "93959356-95cb-4429-b266-d2e0b58bae34"
+  4: "en"
+  5: "{\"Os\":\"darwin\",\"Arch\":\"arm64\",\"Release\":\"24.2.0\",\"Version\":\"Darwin Kernel Version 24.2.0: Fri Nov 15 19:23:35 PST 2024; root:xnu-11215.61.3~1/RELEASE_ARM64_T6020\",\"Machine\":\"arm64\",\"Nodename\":\"Jays-MacBook-Pro.local\",\"Sysname\":\"Darwin\",\"ProductVersion\":\"15.2\"}"
+  7: "11.0.0"
+  8: "{\"NumSockets\":1,\"NumCores\":10,\"NumThreads\":10,\"VendorID\":\"\",\"Family\":\"0\",\"Model\":\"0\",\"ModelName\":\"Apple M2 Pro\",\"Memory\":17179869184}"
+  12: "windsurf"
+  21: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdHRyaWJ1dGlvbl9lbmFibGVkIjpmYWxzZSwiYXV0aF91aWQiOiJrcVBBeDE3MVQ5WVhWcFpRa1dxY1NJRGVTUFgyIiwiZGlzYWJsZV9jb2RlaXVtIjpmYWxzZSwiZGlzYWJsZWRfY29kZV9zbmlwcGV0X3RlbGVtZXRyeSI6dHJ1ZSwiZW1haWwiOiJjaGVzc2pvZUBvdXRsb29rLmNvbSIsImV4cCI6MTczNjE1MDM5OSwiZ3JvdXBfaWRzIjpbXSwiaWdub3JlX2NoYXRfdGVsZW1ldHJ5X3NldHRpbmciOnRydWUsIm5hbWUiOiJXcm9rIE92ZXJsZm93IiwicGxhbl9pbmZvIjoie1widGVhbXNUaWVyXCI6XCJURUFNU19USUVSX1RFQU1TXCIsIFwicGxhbk5hbWVcIjpcIlRlYW1zXCIsIFwiaGFzQXV0b2NvbXBsZXRlRmFzdE1vZGVcIjp0cnVlLCBcImFsbG93U3RpY2t5UHJlbWl1bU1vZGVsc1wiOnRydWUsIFwiaGFzRm9yZ2VBY2Nlc3NcIjp0cnVlLCBcImRpc2FibGVDb2RlU25pcHBldFRlbGVtZXRyeVwiOnRydWUsIFwiYWxsb3dQcmVtaXVtQ29tbWFuZE1vZGVsc1wiOnRydWUsIFwibWF4TnVtUHJlbWl1bUNoYXRNZXNzYWdlc1wiOlwiLTFcIiwgXCJtYXhOdW1DaGF0SW5wdXRUb2tlbnNcIjpcIjE2Mzg0XCIsIFwibWF4Q3VzdG9tQ2hhdEluc3RydWN0aW9uQ2hhcmFjdGVyc1wiOlwiNjAwXCIsIFwibWF4TnVtUGlubmVkQ29udGV4dEl0ZW1zXCI6XCItMVwiLCBcIm1heExvY2FsSW5kZXhTaXplXCI6XCItMVwiLCBcIm1vbnRobHlQcm9tcHRDcmVkaXRzXCI6MzAwMDAsIFwibW9udGhseUZsb3dDcmVkaXRzXCI6MTIwMDAwLCBcIm1vbnRobHlGbGV4Q3JlZGl0UHVyY2hhc2VBbW91bnRcIjozMDAwMDAsIFwiaXNUZWFtc1wiOnRydWUsIFwiY2FuQnV5TW9yZUNyZWRpdHNcIjp0cnVlfSIsInBybyI6dHJ1ZSwidGVhbV9pZCI6ImY5Y2M1M2FjLWM3NWYtNGJhNS05NjA5LWE3YTVmNDc4OTJiMCIsInRlYW1fc3RhdHVzIjoiVVNFUl9URUFNX1NUQVRVU19BUFBST1ZFRCIsInRlYW1zX2ZlYXR1cmVzIjpbXSwidXNlcl9mZWF0dXJlcyI6W119.HA3E-8-ST8naaN-RQ8OE8cPDMACyFBdu3a4wSX00vt4"
+}
+2: "You are an expert AI coding assistant and are pair programming with a USER to solve a coding task.\nYou provide clear, detailed, and accurate summaries of conversations. When asked, you focus on outlining the USER\'s main goals\nand listing key information and context discussed. Your response should be well-organized and reflect the essence of the dialog.\nNEVER lie or make things up. Your summaries should always be grounded in the conversation."
+3 {
+  2: 1
+  3: "draw this project main flow use chars\n\nThe current local time is: 2025-01-06T14:59:58+08:00. This is the latest source of truth for time; do not attempt to get the time any other way.\n\nThe user\'s current state is as follows:\nActive Document: file:///Users/admin/Codespaces/aminer/codegeex-mcp-demo/codegeex_mcp/service/agent_service.py (LANGUAGE_PYTHON)\nCursor is on line: 1\nOther open documents:\n- file:///Users/admin/Codespaces/aminer/codegeex-mcp-demo/setup.py (LANGUAGE_PYTHON)\n- file:///Users/admin/Codespaces/aminer/codegeex-mcp-demo/codegeex_mcp/agent/continue_agent.py (LANGUAGE_PYTHON)\n- file:///Users/admin/Codespaces/aminer/codegeex-mcp-demo/serve_static.py (LANGUAGE_PYTHON)\n- file:///Users/admin/Codespaces/aminer/codegeex-mcp-demo/codegeex_mcp/server/inference.py (LANGUAGE_PYTHON)\n- file:///Users/admin/Codespaces/aminer/codegeex-mcp-demo/codegeex_mcp/agent/state_server.py (LANGUAGE_PYTHON)"
+  4: 368
+  5: 1
+}
+3 {
+  2: 2
+  3: "Let me analyze the project structure and main flow by examining the key files and their relationships.\n\nFirst, I\'ll look at the project directory structure:"
+  4: 38
+}
+3 {
+  2: 2
+  4: 80
+  5: 1
+  6 {
+    1: "toolu_01AoG7gcfGL7o6ENvMUBFi8d"
+    2: "list_dir"
+    3: "{\"DirectoryPath\": \"/Users/admin/Codespaces/aminer/codegeex-mcp-demo\"}"
+  }
+}
+3 {
+  2: 4
+  3: "{\"name\":\".dockerignore\",\"size_bytes\":320}\n{\"name\":\".git\",\"is_dir\":true}\n{\"name\":\".gitignore\",\"size_bytes\":72}\n{\"name\":\".gitmodules\",\"size_bytes\":116}\n{\"name\":\"Dockerfile\",\"size_bytes\":1262}\n{\"name\":\"README.md\",\"size_bytes\":3346}\n{\"name\":\"architecture\",\"is_dir\":true,\"num_children\":3}\n{\"name\":\"codegeex_mcp\",\"is_dir\":true,\"num_children\":30}\n{\"name\":\"configs\",\"is_dir\":true,\"num_children\":2}\n{\"name\":\"demo.py\",\"size_bytes\":6463}\n{\"name\":\"examples\",\"is_dir\":true,\"num_children\":1}\n{\"name\":\"mcp_tools\",\"is_dir\":true,\"num_children\":29}\n{\"name\":\"requirements.txt\",\"size_bytes\":230}\n{\"name\":\"serve_static.py\",\"size_bytes\":979}\n{\"name\":\"setup.py\",\"size_bytes\":290}\n{\"name\":\"start_services.sh\",\"size_bytes\":383}\n{\"name\":\"static\",\"is_dir\":true,\"num_children\":3}\n{\"name\":\"test_agent_service.sh\",\"size_bytes\":1900}\n{\"name\":\"tests\",\"is_dir\":true,\"num_children\":10}\n{\"name\":\"ui\",\"is_dir\":true,\"num_children\":10}"
+  4: 363
+  5: 1
+  7: "toolu_01AoG7gcfGL7o6ENvMUBFi8d"
+}
+3 {
+  2: 1
+  3: "Generate a short conversation title around 3-5 words describing the USER\'s intent and goals during this chat. Should be title-cased, e.g \'Developing a Chess App\'. Format as a simple string, not as markdown; and please output the title directly, do not prefix it with \"Title:\" or anything similar.\n\tThen in a new line, write a single sentence summarizing the same thing,.\n\tPhrase the sentence in the past continuous tense, and speak as if you were describing the USER\'s intent to the USER themselves.\n\tUse \"you were\" or \"we were\" instead of \"I was\""
+}
+6: 113
+7: 5
+8 {
+  1: 1
+  2: 8192
+  3: 200
+  5: 0x3fd999999999999a
+  6: 0x3fd999999999999a
+  7: 50
+  8: 0x3ff0000000000000
+  9: "<|user|>"
+  9: "<|bot|>"
+  9: "<|context_request|>"
+  9: "<|endoftext|>"
+  9: "<|end_of_turn|>"
+  11: 0x3ff0000000000000
+}
+10 {
+  1: "do_not_call"
+  2: "Do not call this tool."
+  3: "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"properties\":{},\"additionalProperties\":false,\"type\":\"object\"}"
+}
+

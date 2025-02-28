@@ -1,0 +1,220 @@
+Response for: POST https://server.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293412
+  2: 411058762
+}
+3: "\n\nI"
+4: 3
+
+
+Message 2:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293412
+  2: 661170911
+}
+3: "\'ve added detailed logging to help us understand what\'s happening"
+4: 13
+
+
+Message 3:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293413
+  2: 2378280
+}
+3: ". Let\'s try running it with your JSON file."
+4: 12
+
+
+Message 4:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293413
+  2: 226142570
+}
+3: " What\'s the path to your Postman collection JSON"
+4: 11
+
+
+Message 5:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293413
+  2: 445874669
+}
+3: " file? From your screenshot, it looks like it"
+4: 10
+
+
+Message 6:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293413
+  2: 838062478
+}
+3: " might be named `server.codeium.com_"
+4: 11
+
+
+Message 7:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293414
+  2: 137442887
+}
+3: "12-16-2024-04-06"
+4: 16
+
+
+Message 8:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293414
+  2: 528385376
+}
+3: "-12.json`. Could you confirm the exact path to this"
+4: 14
+
+
+Message 9:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293414
+  2: 654752776
+}
+3: " file?\n\nOnce you provide the path, we"
+4: 11
+
+
+Message 10:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293415
+  2: 51089315
+}
+3: " can run:\n```bash\npython3 decode"
+4: 10
+
+
+Message 11:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293415
+  2: 199298995
+}
+3: "_postman.py /path/to/your/server"
+4: 13
+
+
+Message 12:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293415
+  2: 277096155
+}
+3: ".codeium.com_12-16"
+4: 11
+
+
+Message 13:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293415
+  2: 467677644
+}
+3: "-2024-04-06-12.json\n```\n\nThe"
+4: 21
+
+
+Message 14:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293415
+  2: 841697033
+}
+3: " script will now show detailed information about:"
+4: 8
+
+
+Message 15:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293416
+  2: 69684773
+}
+3: "\n1. Loading the JSON file\n2. Finding"
+4: 13
+
+
+Message 16:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293416
+  2: 195128772
+}
+3: " items in the collection\n3. Processing each request an"
+4: 12
+
+
+Message 17:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293416
+  2: 270405762
+}
+3: "d response\n4. Base64 decoding steps"
+4: 11
+
+
+Message 18:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293416
+  2: 431204642
+}
+3: "\n5. Message decoding steps\n6. File"
+4: 11
+
+
+Message 19:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293416
+  2: 632308621
+}
+3: " saving operations\n\nThis will help us identify exactly where the process"
+4: 13
+
+
+Message 20:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293416
+  2: 800475811
+}
+3: " might be failing."
+4: 4
+
+
+Message 21:
+1: "bot-cc41740d-2c5b-4776-9176-146f17aa11f6"
+2 {
+  1: 1734293416
+  2: 800556121
+}
+5: 4
+7 {
+  1: 166
+  2: 4
+  3: 209
+  4: 3716
+  5: 38976
+}
+
+
+Message 22 (JSON):
+{}

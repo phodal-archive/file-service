@@ -1,0 +1,109 @@
+Response for: POST https://server.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1: "bot-5184f927-5eb9-4166-8b39-a6a5526b1ff8"
+2 {
+  1: 1734544469
+  2: 950507489
+}
+3: "Hello"
+4: 1
+
+
+Message 2:
+1: "bot-5184f927-5eb9-4166-8b39-a6a5526b1ff8"
+2 {
+  1: 1734544470
+  2: 31339403
+}
+3: "! I\'m here to"
+4: 6
+
+
+Message 3:
+1: "bot-5184f927-5eb9-4166-8b39-a6a5526b1ff8"
+2 {
+  1: 1734544470
+  2: 148982014
+}
+3: " help you with your coding tasks"
+4: 6
+
+
+Message 4:
+1: "bot-5184f927-5eb9-4166-8b39-a6a5526b1ff8"
+2 {
+  1: 1734544470
+  2: 239658487
+}
+3: ". How can I assist you today"
+4: 7
+
+
+Message 5:
+1: "bot-5184f927-5eb9-4166-8b39-a6a5526b1ff8"
+2 {
+  1: 1734544470
+  2: 460816300
+}
+3: "? I see you\'re currently"
+4: 7
+
+
+Message 6:
+1: "bot-5184f927-5eb9-4166-8b39-a6a5526b1ff8"
+2 {
+  1: 1734544470
+  2: 623410598
+}
+3: " in a decoded messages file in"
+4: 7
+
+
+Message 7:
+1: "bot-5184f927-5eb9-4166-8b39-a6a5526b1ff8"
+2 {
+  1: 1734544470
+  2: 713425491
+}
+3: " your temp directory. What"
+4: 5
+
+
+Message 8:
+1: "bot-5184f927-5eb9-4166-8b39-a6a5526b1ff8"
+2 {
+  1: 1734544470
+  2: 803534334
+}
+3: " would you like to work on"
+4: 6
+
+
+Message 9:
+1: "bot-5184f927-5eb9-4166-8b39-a6a5526b1ff8"
+2 {
+  1: 1734544470
+  2: 868450239
+}
+3: "?"
+4: 1
+
+
+Message 10:
+1: "bot-5184f927-5eb9-4166-8b39-a6a5526b1ff8"
+2 {
+  1: 1734544470
+  2: 871402989
+}
+5: 4
+7 {
+  1: 166
+  2: 4
+  3: 46
+  4: 22086
+}
+
+
+Message 11 (JSON):
+{}

@@ -1,0 +1,371 @@
+Response for: POST https://server.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293966
+  2: 391561444
+}
+3: "\n\n\n\nGreat! The script successfully processed the HAR file and foun"
+4: 18
+
+
+Message 2:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293966
+  2: 575510873
+}
+3: "d both requests and responses. Here\'s what we got"
+4: 12
+
+
+Message 3:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293966
+  2: 756014552
+}
+3: ":\n\n1. Found 31 entries"
+4: 10
+
+
+Message 4:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293966
+  2: 924365341
+}
+3: " in the HAR file\n2. Successfully"
+4: 10
+
+
+Message 5:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293966
+  2: 996411971
+}
+3: " decoded 31 requests and 30 responses"
+4: 11
+
+
+Message 6:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293967
+  2: 192123270
+}
+3: " (one response was empty)\n3. All messages"
+4: 11
+
+
+Message 7:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293967
+  2: 387713869
+}
+3: " are for the `GetChatMessage` endpoint"
+4: 10
+
+
+Message 8:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293967
+  2: 525942048
+}
+3: "\n4. The requests and responses have been saved in pairs"
+4: 12
+
+
+Message 9:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293967
+  2: 737167947
+}
+3: " with matching IDs\n5. Files are saved in `/"
+4: 11
+
+
+Message 10:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293967
+  2: 883900616
+}
+3: "Users/admin/Codespaces/github/mcp-cli"
+4: 14
+
+
+Message 11:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293967
+  2: 981916096
+}
+3: "/temp/b3/decoded_messages/"
+4: 11
+
+
+Message 12:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293968
+  2: 408651684
+}
+3: "`\n\nLet\'s look at one of the decoded responses"
+4: 14
+
+
+Message 13:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293968
+  2: 869138151
+}
+3: " to see its structure:"
+4: 5
+
+
+Message 14:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 140167950
+}
+6 {
+  1: "toolu_019qmggWPEwZYAQfV5e8vyFx"
+  2: "view_file"
+}
+
+
+Message 15:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 140467940
+}
+6: ""
+
+
+Message 16:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 712777017
+}
+6 {
+  3: "{\"Absol"
+}
+
+
+Message 17:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 712854997
+}
+6 {
+  3: "utePath\": "
+}
+
+
+Message 18:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 712945817
+}
+6 {
+  3: "\"/Users/admi"
+}
+
+
+Message 19:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 713012047
+}
+6 {
+  3: "n/Codes"
+}
+
+
+Message 20:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 713093857
+}
+6 {
+  3: "paces/githu"
+}
+
+
+Message 21:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 713212767
+}
+6 {
+  3: "b/mc"
+}
+
+
+Message 22:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 713292967
+}
+6 {
+  3: "p-cli/temp"
+}
+
+
+Message 23:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 713369607
+}
+6 {
+  3: "/b3/decode"
+}
+
+
+Message 24:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 713454557
+}
+6 {
+  3: "d_mess"
+}
+
+
+Message 25:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 713546287
+}
+6 {
+  3: "ages/res"
+}
+
+
+Message 26:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 713651607
+}
+6 {
+  3: "_1.decod"
+}
+
+
+Message 27:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 713737107
+}
+6 {
+  3: "ed\""
+}
+
+
+Message 28:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 959190466
+}
+6 {
+  3: ", \""
+}
+
+
+Message 29:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 959268916
+}
+6 {
+  3: "StartLin"
+}
+
+
+Message 30:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293969
+  2: 959364306
+}
+6 {
+  3 {
+    12: 0x30203a22
+  }
+}
+
+
+Message 31:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293970
+  2: 117621825
+}
+6 {
+  3: ", \"EndLi"
+}
+
+
+Message 32:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293970
+  2: 117705525
+}
+6 {
+  3: "ne"
+}
+
+
+Message 33:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293970
+  2: 117754175
+}
+6 {
+  3: "\": 20}"
+}
+
+
+Message 34:
+1: "bot-cae97542-2211-4b81-9501-5e9fff8b7cf4"
+2 {
+  1: 1734293970
+  2: 117804175
+}
+5: 10
+7 {
+  1: 166
+  2: 4
+  3: 260
+  4: 5642
+  5: 27558
+}
+
+
+Message 35 (JSON):
+{}

@@ -1,0 +1,120 @@
+Response for: POST https://server.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1: "bot-4806b7f1-e710-4f97-aa47-ffea5500d040"
+2 {
+  1: 1734292602
+  2: 417378912
+}
+3: "\n\nGreat"
+4: 4
+
+
+Message 2:
+1: "bot-4806b7f1-e710-4f97-aa47-ffea5500d040"
+2 {
+  1: 1734292602
+  2: 659979931
+}
+3: "! The code is now working correctly"
+4: 7
+
+
+Message 3:
+1: "bot-4806b7f1-e710-4f97-aa47-ffea5500d040"
+2 {
+  1: 1734292602
+  2: 833625390
+}
+3: ". It:\n1. Det"
+4: 7
+
+
+Message 4:
+1: "bot-4806b7f1-e710-4f97-aa47-ffea5500d040"
+2 {
+  1: 1734292603
+  2: 7889799
+}
+3: "ects that the file contains already"
+4: 7
+
+
+Message 5:
+1: "bot-4806b7f1-e710-4f97-aa47-ffea5500d040"
+2 {
+  1: 1734292603
+  2: 185200319
+}
+3: " decoded messages\n2. Displays them"
+4: 9
+
+
+Message 6:
+1: "bot-4806b7f1-e710-4f97-aa47-ffea5500d040"
+2 {
+  1: 1734292603
+  2: 407912168
+}
+3: " properly\n3. Shows that message 13 is indee"
+4: 14
+
+
+Message 7:
+1: "bot-4806b7f1-e710-4f97-aa47-ffea5500d040"
+2 {
+  1: 1734292603
+  2: 625540597
+}
+3: "d a JSON object (an empty one)\n\nWoul"
+4: 13
+
+
+Message 8:
+1: "bot-4806b7f1-e710-4f97-aa47-ffea5500d040"
+2 {
+  1: 1734292603
+  2: 716592496
+}
+3: "d you like me to help you analyze"
+4: 8
+
+
+Message 9:
+1: "bot-4806b7f1-e710-4f97-aa47-ffea5500d040"
+2 {
+  1: 1734292603
+  2: 890284485
+}
+3: " the structure of these messages or would you like"
+4: 9
+
+
+Message 10:
+1: "bot-4806b7f1-e710-4f97-aa47-ffea5500d040"
+2 {
+  1: 1734292604
+  2: 64707174
+}
+3: " to try decoding a different file?"
+4: 8
+
+
+Message 11:
+1: "bot-4806b7f1-e710-4f97-aa47-ffea5500d040"
+2 {
+  1: 1734292604
+  2: 127448894
+}
+5: 4
+7 {
+  1: 166
+  2: 6
+  3: 80
+  4: 1206
+  5: 19966
+}
+
+
+Message 12 (JSON):
+{}

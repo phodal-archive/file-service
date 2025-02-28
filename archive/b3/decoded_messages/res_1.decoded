@@ -1,0 +1,140 @@
+Response for: POST https://server.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1: "bot-9a4711be-c64b-4e8c-a3c2-43a48c9bea3b"
+2 {
+  1: 1734292868
+  2: 136397888
+}
+3: "\n\n\n\nGreat! The script is now working successfully. It"
+4: 15
+
+
+Message 2:
+1: "bot-9a4711be-c64b-4e8c-a3c2-43a48c9bea3b"
+2 {
+  1: 1734292868
+  2: 330829187
+}
+3: " has:\n\n1. Found and processed all "
+4: 11
+
+
+Message 3:
+1: "bot-9a4711be-c64b-4e8c-a3c2-43a48c9bea3b"
+2 {
+  1: 1734292868
+  2: 572338886
+}
+3: "8 files from your folders\n2. Successfully"
+4: 10
+
+
+Message 4:
+1: "bot-9a4711be-c64b-4e8c-a3c2-43a48c9bea3b"
+2 {
+  1: 1734292868
+  2: 792039955
+}
+3: " decoded the protobuf messages in each file\n3."
+4: 12
+
+
+Message 5:
+1: "bot-9a4711be-c64b-4e8c-a3c2-43a48c9bea3b"
+2 {
+  1: 1734292868
+  2: 913986074
+}
+3: " Saved the decoded output with a `.decoded` extension"
+4: 13
+
+
+Message 6:
+1: "bot-9a4711be-c64b-4e8c-a3c2-43a48c9bea3b"
+2 {
+  1: 1734292869
+  2: 74352373
+}
+3: " in the same location as each original file\n\nYou shoul"
+4: 13
+
+
+Message 7:
+1: "bot-9a4711be-c64b-4e8c-a3c2-43a48c9bea3b"
+2 {
+  1: 1734292869
+  2: 275905562
+}
+3: "d now see new `.decoded` files next to each"
+4: 12
+
+
+Message 8:
+1: "bot-9a4711be-c64b-4e8c-a3c2-43a48c9bea3b"
+2 {
+  1: 1734292869
+  2: 493209411
+}
+3: " original file in your Desktop folders. Each decoded file contains the human"
+4: 15
+
+
+Message 9:
+1: "bot-9a4711be-c64b-4e8c-a3c2-43a48c9bea3b"
+2 {
+  1: 1734292869
+  2: 675933800
+}
+3: "-readable protobuf messages.\n\nWould you like me to:"
+4: 16
+
+
+Message 10:
+1: "bot-9a4711be-c64b-4e8c-a3c2-43a48c9bea3b"
+2 {
+  1: 1734292869
+  2: 869583089
+}
+3: "\n1. Show you the contents of any of the decoded files?"
+4: 15
+
+
+Message 11:
+1: "bot-9a4711be-c64b-4e8c-a3c2-43a48c9bea3b"
+2 {
+  1: 1734292870
+  2: 42566518
+}
+3: "\n2. Modify the script further?\n3. Help"
+4: 13
+
+
+Message 12:
+1: "bot-9a4711be-c64b-4e8c-a3c2-43a48c9bea3b"
+2 {
+  1: 1734292870
+  2: 216093127
+}
+3: " you analyze the decoded messages?"
+4: 7
+
+
+Message 13:
+1: "bot-9a4711be-c64b-4e8c-a3c2-43a48c9bea3b"
+2 {
+  1: 1734292870
+  2: 218081107
+}
+5: 4
+7 {
+  1: 166
+  2: 5
+  3: 138
+  4: 1558
+  5: 32774
+}
+
+
+Message 14 (JSON):
+{}

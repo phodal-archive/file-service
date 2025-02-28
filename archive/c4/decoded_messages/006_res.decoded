@@ -1,0 +1,90 @@
+Response for: POST https://server.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1: "bot-84ed7a35-de52-4c5c-8425-8cfa54b6acb7"
+2 {
+  1: 1736526393
+  2: 137765966
+}
+3: "\n\nI"
+4: 3
+
+
+Message 2:
+1: "bot-84ed7a35-de52-4c5c-8425-8cfa54b6acb7"
+2 {
+  1: 1736526393
+  2: 277312056
+}
+3: "\'ve updated the pre-commit hook to use"
+4: 10
+
+
+Message 3:
+1: "bot-84ed7a35-de52-4c5c-8425-8cfa54b6acb7"
+2 {
+  1: 1736526393
+  2: 371973638
+}
+3: " `npm` instead of `pnpm`."
+4: 9
+
+
+Message 4:
+1: "bot-84ed7a35-de52-4c5c-8425-8cfa54b6acb7"
+2 {
+  1: 1736526393
+  2: 502239808
+}
+3: " The command has been changed from `pnpm run lint"
+4: 12
+
+
+Message 5:
+1: "bot-84ed7a35-de52-4c5c-8425-8cfa54b6acb7"
+2 {
+  1: 1736526393
+  2: 593045752
+}
+3: "-staged` to `npm run lint-stage"
+4: 12
+
+
+Message 6:
+1: "bot-84ed7a35-de52-4c5c-8425-8cfa54b6acb7"
+2 {
+  1: 1736526393
+  2: 764823758
+}
+3: "d`. The hook will now use npm to run the lint"
+4: 13
+
+
+Message 7:
+1: "bot-84ed7a35-de52-4c5c-8425-8cfa54b6acb7"
+2 {
+  1: 1736526393
+  2: 922683696
+}
+3: "-staged checks before commits."
+4: 7
+
+
+Message 8:
+1: "bot-84ed7a35-de52-4c5c-8425-8cfa54b6acb7"
+2 {
+  1: 1736526393
+  2: 926383106
+}
+5: 4
+7 {
+  1: 166
+  2: 6
+  3: 63
+  4: 354
+  5: 6932
+}
+
+
+Message 9 (JSON):
+{}

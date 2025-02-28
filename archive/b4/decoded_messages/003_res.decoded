@@ -1,0 +1,110 @@
+Response for: POST https://server.codeium.com/exa.api_server_pb.ApiServerService/GetChatMessage
+================================================================================
+Message 1:
+1: "bot-f1d0c38d-1f37-40eb-a8d2-99cab8de027a"
+2 {
+  1: 1734293972
+  2: 473509284
+}
+3: "\n\nPerfect"
+4: 4
+
+
+Message 2:
+1: "bot-f1d0c38d-1f37-40eb-a8d2-99cab8de027a"
+2 {
+  1: 1734293972
+  2: 692064492
+}
+3: "! The script is working well. Each response message"
+4: 10
+
+
+Message 3:
+1: "bot-f1d0c38d-1f37-40eb-a8d2-99cab8de027a"
+2 {
+  1: 1734293972
+  2: 905603581
+}
+3: " contains:\n1. A bot ID"
+4: 8
+
+
+Message 4:
+1: "bot-f1d0c38d-1f37-40eb-a8d2-99cab8de027a"
+2 {
+  1: 1734293973
+  2: 40418150
+}
+3: "\n2. A timestamp\n3. The actual"
+4: 10
+
+
+Message 5:
+1: "bot-f1d0c38d-1f37-40eb-a8d2-99cab8de027a"
+2 {
+  1: 1734293973
+  2: 254958528
+}
+3: " message content\n4. A message type ID"
+4: 9
+
+
+Message 6:
+1: "bot-f1d0c38d-1f37-40eb-a8d2-99cab8de027a"
+2 {
+  1: 1734293973
+  2: 390251097
+}
+3: "\n\nWould you like me to:\n1. Look"
+4: 13
+
+
+Message 7:
+1: "bot-f1d0c38d-1f37-40eb-a8d2-99cab8de027a"
+2 {
+  1: 1734293973
+  2: 568783486
+}
+3: " at more of the decoded messages?\n2."
+4: 11
+
+
+Message 8:
+1: "bot-f1d0c38d-1f37-40eb-a8d2-99cab8de027a"
+2 {
+  1: 1734293973
+  2: 742929145
+}
+3: " Modify the script to extract specific fields from the messages?"
+4: 12
+
+
+Message 9:
+1: "bot-f1d0c38d-1f37-40eb-a8d2-99cab8de027a"
+2 {
+  1: 1734293973
+  2: 897581563
+}
+3: "\n3. Or something else?"
+4: 7
+
+
+Message 10:
+1: "bot-f1d0c38d-1f37-40eb-a8d2-99cab8de027a"
+2 {
+  1: 1734293973
+  2: 900210173
+}
+5: 4
+7 {
+  1: 166
+  2: 4
+  3: 82
+  4: 575
+  5: 33200
+}
+
+
+Message 11 (JSON):
+{}
